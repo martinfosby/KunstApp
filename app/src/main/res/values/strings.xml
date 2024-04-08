@@ -48,7 +48,10 @@
     <string name="skyscraper">Høyhus</string>
     <string name="skyline">Skyline</string>
     <string name="grass">Gresseng</string>
-
+    <string name="calculated_price">Beregnet pris</string>
+    <string name="frame_choice">Rammevalg</string>
+    <string name="photo_details">Bildedetaljer</string>
+    <string name="put_in_shopping_cart">Legg i handlekurv</string>
 
 
 </resources>

@@ -85,20 +85,20 @@ fun CheckoutCart(
     Card {
         Column {
             Card {
-                Text(text = "Bildedetaljer")
+                Text(text = stringResource(id = R.string.photo_details))
                 Text(text = "Artist: ${stringResource(id = photo.artist.nameResId)}")
             }
             Card {
-                Text(text = "Rammevalg")
+                Text(text = stringResource(id = R.string.frame_choice))
 
             }
             Card {
-                Text(text = "Beregnet pris")
+                Text(text = stringResource(id = R.string.calculated_price))
                 Text(text = "${photo.price}")
             }
             Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small)))
             Button(onClick = onCheckoutClicked ) {
-                Text(text = "Legg i handlekurv")
+                Text(text = stringResource(id = R.string.put_in_shopping_cart))
             }
         }
     }
