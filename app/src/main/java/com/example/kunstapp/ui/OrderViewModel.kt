@@ -21,12 +21,13 @@ class OrderViewModel: ViewModel() {
         }
     }
 
-    fun addToShopping() {
-        _uiState.update {
-            it.copy(
-                shoppingCart =
-            )
-        }
+    fun addToShopping(photo: Photo) {
+//        _uiState.update {current_state ->
+//            current_state.copy(
+//                shoppingCart = current_state.shoppingCart._
+//            )
+//        }
+        _uiState.value.shoppingCart.add(photo)
     }
 
 }

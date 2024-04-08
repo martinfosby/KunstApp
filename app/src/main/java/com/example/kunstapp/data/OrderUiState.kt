@@ -3,7 +3,7 @@ package com.example.kunstapp.data
 data class OrderUiState(
     val currentPhoto: Photo? = null,
     val checkout: Boolean = false,
-    val shoppingCart: List<Photo> = emptyList(),
+    val shoppingCart: MutableList<Photo> = mutableListOf(),
     /** Selected photo quantity (1, 6, 12) */
     val quantity: Int = 0,
     /** Selected date for pickup (such as "Jan 1") */

@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -49,6 +50,7 @@ import java.util.zip.CheckedOutputStream
 fun SummaryScreen(
     photo: Photo,
     onCheckoutClicked: () -> Unit,
+    onHomeClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -58,6 +60,9 @@ fun SummaryScreen(
         PhotoCard(photo = photo)
         Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium)))
         CheckoutCart(photo = photo, onCheckoutClicked = onCheckoutClicked)
+        Button(onClick = onHomeClicked) {
+            Text(text = stringResource(id = R.string.home))
+        }
     }
 }
 
@@ -90,7 +95,10 @@ fun CheckoutCart(
             }
             Card {
                 Text(text = stringResource(id = R.string.frame_choice))
+                for (i in 1..4){
+                    RadioButton(selected = , onClick = { /*TODO*/ })
 
+                }
             }
             Card {
                 Text(text = stringResource(id = R.string.calculated_price))
@@ -111,6 +119,7 @@ fun SummaryPreview() {
         SummaryScreen(
             photo = DataSource.photos[0],
             onCheckoutClicked = {},
+            onHomeClicked = {},
             modifier = Modifier.fillMaxHeight()
         )
     }

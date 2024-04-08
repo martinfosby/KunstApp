@@ -116,8 +116,11 @@ fun ArtApp(
                     SummaryScreen(
                         photo = it1,
                         onCheckoutClicked = {
-                            viewModel.addToShopping()
+                            viewModel.addToShopping(it1)
                             navController.navigate(ArtScreen.Photos.name)
+                        },
+                        onHomeClicked = {
+                            navController.navigate(ArtScreen.Start.name)
                         }
                     )
                 }

@@ -52,6 +52,7 @@
     <string name="frame_choice">Rammevalg</string>
     <string name="photo_details">Bildedetaljer</string>
     <string name="put_in_shopping_cart">Legg i handlekurv</string>
+    <string name="home">Hjem</string>
 
 
 </resources>
