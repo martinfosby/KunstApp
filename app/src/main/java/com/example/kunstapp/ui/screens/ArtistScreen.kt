@@ -55,7 +55,7 @@ import com.example.kunstapp.ui.theme.KunstAppTheme
 
 @Composable
 fun ArtistScreen(
-    onArtistClicked: () -> Unit,
+    onArtistClicked: (Artist) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -66,7 +66,7 @@ fun ArtistScreen(
             ArtistListItem(
                 artist = artist,
                 modifier = Modifier
-                    .clickable(onClick = onArtistClicked)
+                    .clickable(onClick = { onArtistClicked(artist) })
                     .padding(dimensionResource(id = R.dimen.padding_medium))
             )
         }
@@ -86,8 +86,8 @@ fun ArtistListItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
-                .sizeIn(minHeight = 72.dp)
+                .padding(dimensionResource(id = R.dimen.padding_medium))
+                .sizeIn(minHeight = dimensionResource(id = R.dimen.photo_extra_small))
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
@@ -98,8 +98,8 @@ fun ArtistListItem(
             Spacer(Modifier.width(16.dp))
             Box(
                 modifier = Modifier
-                    .size(72.dp)
-                    .clip(RoundedCornerShape(8.dp))
+                    .size(dimensionResource(id = R.dimen.photo_extra_small))
+                    .clip(RoundedCornerShape(dimensionResource(id = R.dimen.padding_small)))
 
             ) {
                 Image(

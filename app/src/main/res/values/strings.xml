@@ -44,11 +44,30 @@
     <string name="artist_name_jens">Jens Stoltenberg</string>
     <string name="artist_name_jonas">Jonas Gal Større</string>
     <string name="artist_name_arnold">Arnold Schwarzenegger</string>
+    <string name="artist_name_anna">Anna</string>
+    <string name="artist_name_peter">Peter</string>
+    <string name="artist_name_john">John</string>
+    <string name="artist_name_emily">Emily</string>
+    <string name="artist_name_david">David</string>
+    <string name="artist_name_sarah">Sarah</string>
+    <string name="artist_name_michael">Michael</string>
+    <string name="artist_name_lisa">Lisa</string>
 
     <string name="skyscraper">Høyhus</string>
     <string name="skyline">Skyline</string>
     <string name="grass">Gresseng</string>
+    <string name="photo1_title">City View</string>
+    <string name="photo2_title">Urban Landscape</string>
+    <string name="photo3_title">Downtown Reflections</string>
+    <string name="photo4_title">Metropolis</string>
+    <string name="photo5_title">Highrise Sunset</string>
+    <string name="photo6_title">Cityscape at Night</string>
+    <string name="photo7_title">Tower Heights</string>
+    <string name="photo8_title">Skyline Panorama</string>
+    <string name="photo9_title">Urban Symmetry</string>
+    <string name="photo10_title">Elevated Perspective</string>
     <string name="calculated_price">Beregnet pris: %s</string>
+    <string name="price">Pris(inkl. ramme): %s</string>
     <string name="frame_choice">Rammevalg</string>
     <string name="photo_details">Bildedetaljer</string>
     <string name="put_in_shopping_cart">Legg i handlekurv</string>
@@ -56,8 +75,13 @@
     <string name="steel_frame">stål frame</string>
     <string name="wood_frame">tre</string>
     <string name="plastic_frame">Plast</string>
-    <string name="artist_name">Artist: %s</string>
+    <string name="artist_name">Kunstner: %s</string>
     <string name="no_frame">Ingen</string>
+    <string name="checkout">Betalling</string>
+    <string name="go_to_checkout">Gå til betaling</string>
+    <string name="delete">Slett</string>
+    <string name="frame">Ramme: %s</string>
+    <string name="artist_name_superman">Superman</string>
 
 
 </resources>

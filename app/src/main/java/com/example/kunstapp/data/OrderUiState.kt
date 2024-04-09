@@ -4,7 +4,9 @@ import com.example.kunstapp.datasource.DataSource
 
 data class OrderUiState(
     val currentPhoto: Photo = DataSource.photos[0],
-    val checkout: Boolean = false,
+    val currentArtist: Artist = DataSource.artists[0],
+    val currentPhotos: List<Photo> = DataSource.photos.filter { it.artist == DataSource.artists[0] },
+    val shoppingCartEmpty: Boolean = true,
     val shoppingCart: MutableList<Photo> = mutableListOf(),
     /** Selected photo quantity (1, 6, 12) */
     val quantity: Int = 0,

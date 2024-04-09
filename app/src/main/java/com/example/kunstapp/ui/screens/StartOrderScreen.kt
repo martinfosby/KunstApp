@@ -15,32 +15,49 @@
  */
 package com.example.kunstapp.ui.screens
 
-import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.kunstapp.R
+import com.example.kunstapp.data.OrderUiState
+import com.example.kunstapp.data.Photo
+import com.example.kunstapp.datasource.DataSource
 import com.example.kunstapp.ui.theme.KunstAppTheme
 
 
 @Composable
 fun StartOrderScreen(
+    orderUiState: OrderUiState,
+    shoppingCartEmpty: Boolean,
     onArtistButtonClicked: () -> Unit,
     onCategoryButtonClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    onCheckoutButtonClicked: () -> Unit,
+    onDeleteButtonClicked: (Photo) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
@@ -59,17 +76,66 @@ fun StartOrderScreen(
                 Text(text = stringResource(id = R.string.category))
             }
         }
+        if (!shoppingCartEmpty) {
+            ShoppingCartCard(
+                orderUiState = orderUiState,
+                onDeleteButtonClicked = onDeleteButtonClicked,
+            )
+            Button(onClick = onCheckoutButtonClicked) {
+                Text(text = stringResource(id = R.string.go_to_checkout))
+            }
+        }
     }
 }
 
+@Composable
+fun ShoppingCartCard(
+    orderUiState: OrderUiState,
+    onDeleteButtonClicked: (Photo) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        modifier = modifier
+    ) {
+        LazyColumn {
+            items(orderUiState.shoppingCart) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small)),
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Image(
+                        painter = painterResource(id = it.imageResId),
+                        contentDescription = null,
+                        modifier
+                            .size(dimensionResource(id = R.dimen.photo_extra_small))
+
+                    )
+                    Column {
+                        Text(text = stringResource(id = it.title))
+                        Text(text = stringResource(id = R.string.frame, it.frame.name))
+                        Text(text = stringResource(id = R.string.price, it.price))
+                    }
+                    Button(onClick = { onDeleteButtonClicked(it) }) {
+                        Text(text = stringResource(id = R.string.delete))
+                    }
+                }
+            }
+        }
+    }
+}
 
 @Preview
 @Composable
 fun StartOrderPreview() {
     KunstAppTheme {
         StartOrderScreen(
+            orderUiState = OrderUiState().apply { shoppingCart.add(DataSource.photos[0]) },
+            shoppingCartEmpty = false,
             onArtistButtonClicked = {},
             onCategoryButtonClicked = {},
+            onCheckoutButtonClicked = {},
+            onDeleteButtonClicked = {},
             modifier = Modifier
                 .fillMaxSize()
                 .padding(dimensionResource(R.dimen.padding_medium))
