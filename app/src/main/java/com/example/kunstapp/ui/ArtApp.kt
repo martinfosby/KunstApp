@@ -106,24 +106,25 @@ fun ArtApp(
             composable(route = ArtScreen.Photos.name) {
                 PhotoScreen(
                     onPhotoClicked = {
-                        viewModel.updatePhoto(it)
+                        viewModel.setPhoto(it)
                         navController.navigate(ArtScreen.Summary.name)
                     }
                 )
             }
             composable(route = ArtScreen.Summary.name) {
-                uiState.currentPhoto?.let { it1 ->
-                    SummaryScreen(
-                        photo = it1,
-                        onCheckoutClicked = {
-                            viewModel.addToShopping(it1)
-                            navController.navigate(ArtScreen.Photos.name)
-                        },
-                        onHomeClicked = {
-                            navController.navigate(ArtScreen.Start.name)
-                        }
-                    )
-                }
+                SummaryScreen(
+                    orderUiStateState = uiState,
+                    onCheckoutClicked = {
+                        viewModel.addToShopping()
+                        navController.navigate(ArtScreen.Photos.name)
+                    },
+                    onHomeClicked = {
+                        navController.navigate(ArtScreen.Start.name)
+                    },
+                    onFrameSelected = {
+                        viewModel.setFrame(it)
+                    }
+                )
             }
 
         }

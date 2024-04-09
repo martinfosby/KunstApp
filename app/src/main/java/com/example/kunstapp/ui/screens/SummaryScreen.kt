@@ -15,13 +15,15 @@
  */
 package com.example.kunstapp.ui.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -30,36 +32,37 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.kunstapp.R
-import com.example.kunstapp.ui.theme.KunstAppTheme
+import com.example.kunstapp.data.Frame
 import com.example.kunstapp.data.OrderUiState
+import com.example.kunstapp.ui.theme.KunstAppTheme
 import com.example.kunstapp.data.Photo
-import com.example.kunstapp.datasource.DataSource
-import java.util.zip.CheckedOutputStream
 
-/**
- * This composable expects [orderUiState] that represents the order state, [onCancelButtonClicked]
- * lambda that triggers canceling the order and passes the final order to [onSendButtonClicked]
- * lambda
- * */
+
 @Composable
 fun SummaryScreen(
-    photo: Photo,
+    orderUiStateState: OrderUiState,
     onCheckoutClicked: () -> Unit,
     onHomeClicked: () -> Unit,
+    onFrameSelected: (Frame) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        PhotoCard(photo = photo)
+        PhotoCard(orderUiState = orderUiStateState)
         Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium)))
-        CheckoutCart(photo = photo, onCheckoutClicked = onCheckoutClicked)
+        CheckoutCart(
+                orderUiStateState = orderUiStateState,
+                onCheckoutClicked = onCheckoutClicked,
+                onFrameSelected = onFrameSelected
+            )
         Button(onClick = onHomeClicked) {
             Text(text = stringResource(id = R.string.home))
         }
@@ -67,14 +70,24 @@ fun SummaryScreen(
 }
 
 @Composable
-fun PhotoCard(photo: Photo, modifier: Modifier = Modifier) {
+fun PhotoCard(orderUiState: OrderUiState, modifier: Modifier = Modifier) {
+    val col = when(orderUiState.currentPhoto.frame){
+        Frame.None -> Color.Transparent
+        Frame.Metal -> Color.LightGray
+        Frame.Wood -> Color.Yellow
+        Frame.Plastic -> Color.DarkGray
+    }
     Card(
-        modifier = modifier.padding(dimensionResource(id = R.dimen.padding_small)) // Add padding to the card
+        modifier = modifier
+            .padding(dimensionResource(id = R.dimen.padding_small)) // Add padding to the card
     ) {
         Box(
+            modifier = Modifier
+                .border(border = BorderStroke(width = dimensionResource(id = R.dimen.padding_medium), color = col)
+            )
         ) {
             Image(
-                painter = painterResource(id = photo.imageResId),
+                painter = painterResource(id = orderUiState.currentPhoto.imageResId),
                 contentDescription = null, // Provide a meaningful description for accessibility
             )
         }
@@ -83,26 +96,70 @@ fun PhotoCard(photo: Photo, modifier: Modifier = Modifier) {
 
 @Composable
 fun CheckoutCart(
-    photo: Photo,
+    orderUiStateState: OrderUiState,
     onCheckoutClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    onFrameSelected: (Frame) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Card {
         Column {
             Card {
                 Text(text = stringResource(id = R.string.photo_details))
-                Text(text = "Artist: ${stringResource(id = photo.artist.nameResId)}")
+                Text(text = stringResource(id = R.string.artist_name, stringResource(id = orderUiStateState.currentPhoto.artist.nameResId)))
             }
             Card {
                 Text(text = stringResource(id = R.string.frame_choice))
-                for (i in 1..4){
-                    RadioButton(selected = , onClick = { /*TODO*/ })
-
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = stringResource(id = R.string.no_frame))
+                    RadioButton(
+                        selected = orderUiStateState.currentPhoto.frame == Frame.None,
+                        onClick = {
+                            onFrameSelected(Frame.None)
+                        }
+                    )
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = stringResource(id = R.string.steel_frame))
+                    RadioButton(
+                        selected = orderUiStateState.currentPhoto.frame == Frame.Metal,
+                        onClick = {
+                            onFrameSelected(Frame.Metal)
+                        }
+                    )
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = stringResource(id = R.string.wood_frame))
+                    RadioButton(
+                        selected = orderUiStateState.currentPhoto.frame == Frame.Wood,
+                        onClick = {
+                            onFrameSelected(Frame.Wood)
+                        }
+                    )
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = stringResource(id = R.string.plastic_frame))
+                    RadioButton(
+                        selected = orderUiStateState.currentPhoto.frame == Frame.Plastic,
+                        onClick = {
+                            onFrameSelected(Frame.Plastic)
+                        }
+                    )
                 }
             }
             Card {
-                Text(text = stringResource(id = R.string.calculated_price))
-                Text(text = "${photo.price}")
+                Text(
+                    text = stringResource(
+                        id = R.string.calculated_price, orderUiStateState.price
+                    )
+                )
             }
             Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small)))
             Button(onClick = onCheckoutClicked ) {
@@ -117,9 +174,10 @@ fun CheckoutCart(
 fun SummaryPreview() {
     KunstAppTheme {
         SummaryScreen(
-            photo = DataSource.photos[0],
             onCheckoutClicked = {},
             onHomeClicked = {},
+            orderUiStateState = OrderUiState(),
+            onFrameSelected = {},
             modifier = Modifier.fillMaxHeight()
         )
     }

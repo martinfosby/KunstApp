@@ -1,6 +1,7 @@
 package com.example.kunstapp.ui
 
 import androidx.lifecycle.ViewModel
+import com.example.kunstapp.data.Frame
 import com.example.kunstapp.data.OrderUiState
 import com.example.kunstapp.data.Photo
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,7 @@ class OrderViewModel: ViewModel() {
     val uiState: StateFlow<OrderUiState> = _uiState.asStateFlow()
 
 
-    fun updatePhoto(photo: Photo) {
+    fun setPhoto(photo: Photo) {
         _uiState.update {
             it.copy(
                 currentPhoto = photo
@@ -21,13 +22,17 @@ class OrderViewModel: ViewModel() {
         }
     }
 
-    fun addToShopping(photo: Photo) {
-//        _uiState.update {current_state ->
-//            current_state.copy(
-//                shoppingCart = current_state.shoppingCart._
-//            )
-//        }
-        _uiState.value.shoppingCart.add(photo)
+    fun addToShopping() {
+        _uiState.value.shoppingCart.add(_uiState.value.currentPhoto)
+    }
+
+    fun setFrame(frame: Frame) {
+        _uiState.update {
+            it.copy(
+                currentPhoto = _uiState.value.currentPhoto.copy(frame = frame),
+                price = _uiState.value.currentPhoto.price + frame.price
+            )
+        }
     }
 
 }

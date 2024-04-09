@@ -14,5 +14,6 @@ data class Photo(
     var artist: Artist,
     var category: Category,
     var price: Float = 0.0f,
-    var visits: Int = 0
+    var visits: Int = 0,
+    var frame: Frame = Frame.None,
 )
