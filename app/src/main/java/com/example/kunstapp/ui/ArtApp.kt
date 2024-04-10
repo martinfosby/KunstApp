@@ -25,9 +25,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kunstapp.R
-import com.example.kunstapp.datasource.DataSource
 import com.example.kunstapp.ui.screens.ArtistScreen
 import com.example.kunstapp.ui.screens.ArtScreen
+import com.example.kunstapp.ui.screens.CategoryScreen
 import com.example.kunstapp.ui.screens.CheckoutScreen
 import com.example.kunstapp.ui.screens.PhotoScreen
 import com.example.kunstapp.ui.screens.StartOrderScreen
@@ -116,6 +116,12 @@ fun ArtApp(
                     }
                 )
             }
+            composable(route = ArtScreen.Categories.name) {
+                CategoryScreen {
+                    viewModel.setPhotosFromCategory(it)
+                    navController.navigate(ArtScreen.Photos.name)
+                }
+            }
             composable(route = ArtScreen.Photos.name) {
                 PhotoScreen(
                     orderUiState = uiState,
@@ -125,12 +131,12 @@ fun ArtApp(
                     },
                     onHomeClicked = {
                         navController.navigate(ArtScreen.Start.name)
-                    }
+                    },
                 )
             }
             composable(route = ArtScreen.Summary.name) {
                 SummaryScreen(
-                    orderUiStateState = uiState,
+                    orderUiState = uiState,
                     onCheckoutClicked = {
                         viewModel.addToShopping()
                         navController.navigate(ArtScreen.Photos.name)

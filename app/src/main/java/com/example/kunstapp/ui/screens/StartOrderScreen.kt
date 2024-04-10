@@ -17,34 +17,30 @@ package com.example.kunstapp.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.ShapeDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.kunstapp.R
 import com.example.kunstapp.data.OrderUiState
-import com.example.kunstapp.data.Photo
+import com.example.kunstapp.model.Photo
 import com.example.kunstapp.datasource.DataSource
 import com.example.kunstapp.ui.theme.KunstAppTheme
 
@@ -64,10 +60,11 @@ fun StartOrderScreen(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = stringResource(id = R.string.choose_option))
+        Text(text = stringResource(id = R.string.choose_option), style = MaterialTheme.typography.displayLarge)
         Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium)))
         Row(
-            horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
+            horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium)),
+            modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_large))
         ) {
             Button(onClick = onArtistButtonClicked ) {
                 Text(text = stringResource(id = R.string.artist))
@@ -81,6 +78,7 @@ fun StartOrderScreen(
                 orderUiState = orderUiState,
                 onDeleteButtonClicked = onDeleteButtonClicked,
             )
+            Spacer(modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_large)))
             Button(onClick = onCheckoutButtonClicked) {
                 Text(text = stringResource(id = R.string.go_to_checkout))
             }
@@ -117,7 +115,7 @@ fun ShoppingCartCard(
                         Text(text = stringResource(id = R.string.price, it.price))
                     }
                     Button(onClick = { onDeleteButtonClicked(it) }) {
-                        Text(text = stringResource(id = R.string.delete))
+                        Icon(painter = painterResource(id = R.drawable.baseline_delete_24), contentDescription = stringResource(id = R.string.delete))
                     }
                 }
             }
@@ -130,7 +128,13 @@ fun ShoppingCartCard(
 fun StartOrderPreview() {
     KunstAppTheme {
         StartOrderScreen(
-            orderUiState = OrderUiState().apply { shoppingCart.add(DataSource.photos[0]) },
+            orderUiState = OrderUiState(
+                DataSource.photos[0],
+                currentPhotos = DataSource.photos.filter { it.artist.id == DataSource.artists[0].id },
+                currentArtist = DataSource.artists[0],
+                shoppingCart = DataSource.photos.toMutableList()
+            )
+            ,
             shoppingCartEmpty = false,
             onArtistButtonClicked = {},
             onCategoryButtonClicked = {},

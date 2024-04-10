@@ -1,4 +1,4 @@
-package com.example.kunstapp.data
+package com.example.kunstapp.model
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

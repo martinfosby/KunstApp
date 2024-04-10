@@ -24,7 +24,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.RadioButton
@@ -38,15 +42,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.kunstapp.R
-import com.example.kunstapp.data.Frame
+import com.example.kunstapp.model.Frame
 import com.example.kunstapp.data.OrderUiState
+import com.example.kunstapp.datasource.DataSource
 import com.example.kunstapp.ui.theme.KunstAppTheme
-import com.example.kunstapp.data.Photo
 
 
 @Composable
 fun SummaryScreen(
-    orderUiStateState: OrderUiState,
+    orderUiState: OrderUiState,
     onCheckoutClicked: () -> Unit,
     onHomeClicked: () -> Unit,
     onFrameSelected: (Frame) -> Unit,
@@ -54,15 +58,17 @@ fun SummaryScreen(
 ) {
     Column(
         verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier.fillMaxSize()
     ) {
-        PhotoCard(orderUiState = orderUiStateState)
+        PhotoCard(orderUiState = orderUiState)
         Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium)))
         CheckoutCart(
-                orderUiStateState = orderUiStateState,
+                orderUiStateState = orderUiState,
                 onCheckoutClicked = onCheckoutClicked,
                 onFrameSelected = onFrameSelected
             )
+        Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium)))
         Button(onClick = onHomeClicked) {
             Text(text = stringResource(id = R.string.home))
         }
@@ -89,6 +95,7 @@ fun PhotoCard(orderUiState: OrderUiState, modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(id = orderUiState.currentPhoto.imageResId),
                 contentDescription = null, // Provide a meaningful description for accessibility
+                modifier = Modifier.size(dimensionResource(id = R.dimen.photo_large))
             )
         }
     }
@@ -176,7 +183,11 @@ fun SummaryPreview() {
         SummaryScreen(
             onCheckoutClicked = {},
             onHomeClicked = {},
-            orderUiStateState = OrderUiState(),
+            orderUiState = OrderUiState(
+                DataSource.photos[11],
+                currentPhotos = DataSource.photos.filter { it.artist.id == DataSource.artists[0].id },
+                currentArtist = DataSource.artists[0] )
+            ,
             onFrameSelected = {},
             modifier = Modifier.fillMaxHeight()
         )

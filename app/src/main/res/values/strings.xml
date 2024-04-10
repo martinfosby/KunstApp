@@ -82,6 +82,15 @@
     <string name="delete">Slett</string>
     <string name="frame">Ramme: %s</string>
     <string name="artist_name_superman">Superman</string>
+    <string name="nature">Natur</string>
+    <string name="food">Mat</string>
+    <string name="architecture">Arkitektur</string>
+    <string name="sport">Sport</string>
+    <string name="misc">Diverse</string>
+    <string name="Buildings">Bygninger</string>
+    <string name="total_photos">Antall bilder: %d</string>
+    <string name="most_expensive_photo">Dyreste bilde: %s</string>
+    <string name="most_popular_photo">Mest populære bilde: %s</string>
 
 
 </resources>

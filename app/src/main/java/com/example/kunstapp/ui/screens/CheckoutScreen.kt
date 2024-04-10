@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.kunstapp.R
 import com.example.kunstapp.data.OrderUiState
+import com.example.kunstapp.datasource.DataSource
 import com.example.kunstapp.ui.theme.KunstAppTheme
 
 
@@ -38,6 +39,11 @@ fun CheckoutScreen(orderUiState: OrderUiState, modifier: Modifier = Modifier) {
 @Composable
 fun PreviewCheckoutScreen() {
     KunstAppTheme {
-        CheckoutScreen(orderUiState = OrderUiState())
+        CheckoutScreen(
+            orderUiState = OrderUiState(
+                DataSource.photos[0],
+                currentPhotos = DataSource.photos.filter { it.artist.id == DataSource.artists[0].id },
+                currentArtist = DataSource.artists[0] )
+        )
     }
 }

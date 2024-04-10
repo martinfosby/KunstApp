@@ -17,8 +17,10 @@
 <resources>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
     <dimen name="thickness_divider">1dp</dimen>
     <dimen name="photo_extra_small">80dp</dimen>
     <dimen name="photo_small">100dp</dimen>
     <dimen name="photo_medium">200dp</dimen>
+    <dimen name="photo_large">300dp</dimen>
 </resources>

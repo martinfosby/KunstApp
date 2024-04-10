@@ -17,9 +17,6 @@ package com.example.kunstapp.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.hoverable
-import androidx.compose.foundation.interaction.HoverInteraction
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -48,7 +45,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.kunstapp.R
-import com.example.kunstapp.data.Artist
+import com.example.kunstapp.model.Artist
 import com.example.kunstapp.datasource.DataSource
 import com.example.kunstapp.ui.theme.KunstAppTheme
 
@@ -89,13 +86,6 @@ fun ArtistListItem(
                 .padding(dimensionResource(id = R.dimen.padding_medium))
                 .sizeIn(minHeight = dimensionResource(id = R.dimen.photo_extra_small))
         ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = stringResource(artist.nameResId),
-                    style = MaterialTheme.typography.displaySmall
-                )
-            }
-            Spacer(Modifier.width(16.dp))
             Box(
                 modifier = Modifier
                     .size(dimensionResource(id = R.dimen.photo_extra_small))
@@ -109,6 +99,39 @@ fun ArtistListItem(
                     contentScale = ContentScale.FillWidth
                 )
             }
+            Spacer(Modifier.width(16.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(artist.nameResId),
+                    style = MaterialTheme.typography.labelMedium
+                )
+                Text(
+                    text = stringResource(
+                        id = R.string.total_photos,
+                        artist.getTotalPhotos()
+                    ),
+                    style = MaterialTheme.typography.labelSmall
+                )
+                artist.getMostExpensivePhoto()?.let { mostExpensivePhoto ->
+                    Text(
+                        text = stringResource(
+                            id = R.string.most_expensive_photo,
+                            stringResource(id = mostExpensivePhoto.title)
+                        ),
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
+                artist.getMostPopularPhoto()?.let { mostPopularPhoto ->
+                    Text(
+                        text = stringResource(
+                            id = R.string.most_popular_photo,
+                            stringResource(id = mostPopularPhoto.title)
+                        ),
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
+            }
+
         }
     }
 }

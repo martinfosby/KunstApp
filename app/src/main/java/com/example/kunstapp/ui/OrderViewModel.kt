@@ -1,10 +1,11 @@
 package com.example.kunstapp.ui
 
 import androidx.lifecycle.ViewModel
-import com.example.kunstapp.data.Artist
-import com.example.kunstapp.data.Frame
+import com.example.kunstapp.model.Artist
+import com.example.kunstapp.model.Category
+import com.example.kunstapp.model.Frame
 import com.example.kunstapp.data.OrderUiState
-import com.example.kunstapp.data.Photo
+import com.example.kunstapp.model.Photo
 import com.example.kunstapp.datasource.DataSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -63,12 +64,29 @@ class OrderViewModel: ViewModel() {
         }
     }
 
+    fun setCategory(category: Category) {
+        _uiState.update {
+            it.copy(
+                currentCategory = category
+            )
+        }
+    }
+
     fun setPhotosFromArtist(artist: Artist) {
         _uiState.update { currentState ->
             currentState.copy(
                 currentPhotos = DataSource.photos.filter { it.artist.id == artist.id }
             )
         }
+    }
+
+    fun setPhotosFromCategory(category: Category) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                currentPhotos = DataSource.photos.filter { it.category.id == category.id }
+            )
+        }
+
     }
 
 }

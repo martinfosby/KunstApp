@@ -1,9 +1,9 @@
 package com.example.kunstapp.datasource
 
 import com.example.kunstapp.R
-import com.example.kunstapp.data.Artist
-import com.example.kunstapp.data.Category
-import com.example.kunstapp.data.Photo
+import com.example.kunstapp.model.Artist
+import com.example.kunstapp.model.Category
+import com.example.kunstapp.model.Photo
 
 object DataSource {
     val artists = listOf(
@@ -11,85 +11,71 @@ object DataSource {
             id = 0,
             nameResId = R.string.artist_name_ola,
             imageResId = R.drawable.android_superhero1,
-            totalPhotos = 5
         ),
         Artist(
             id = 1,
             nameResId = R.string.artist_name_kari,
             imageResId = R.drawable.android_superhero2,
-            totalPhotos = 3
         ),
         Artist(
             id = 2,
             nameResId = R.string.artist_name_anna,
             imageResId = R.drawable.android_superhero3,
-            totalPhotos = 7
         ),
         Artist(
             id = 3,
             nameResId = R.string.artist_name_peter,
             imageResId = R.drawable.android_superhero4,
-            totalPhotos = 4
         ),
         Artist(
             id = 4,
             nameResId = R.string.artist_name_john,
             imageResId = R.drawable.android_superhero5,
-            totalPhotos = 6
         ),
         Artist(
             id = 5,
             nameResId = R.string.artist_name_emily,
             imageResId = R.drawable.android_superhero6,
-            totalPhotos = 2
         ),
         Artist(
             id = 6,
             nameResId = R.string.artist_name_david,
             imageResId = R.drawable.bella,
-            totalPhotos = 9
         ),
         Artist(
             id = 7,
             nameResId = R.string.artist_name_sarah,
             imageResId = R.drawable.faye,
-            totalPhotos = 3
         ),
         Artist(
             id = 8,
             nameResId = R.string.artist_name_michael,
             imageResId = R.drawable.frankie,
-            totalPhotos = 5
         ),
         Artist(
             id = 9,
             nameResId = R.string.artist_name_lisa,
             imageResId = R.drawable.koda,
-            totalPhotos = 4
         ),
         Artist(
             id = 10,
             nameResId = R.string.artist_name_jens,
             imageResId = R.drawable.leroy,
-            totalPhotos = 9
         ),
         Artist(
             id = 11,
             nameResId = R.string.artist_name_arnold,
             imageResId = R.drawable.lola,
-            totalPhotos = 3
         ),
         Artist(
             id = 12,
             nameResId = R.string.artist_name_jonas,
             imageResId = R.drawable.nox,
-            totalPhotos = 5
         ),
         Artist(
             id = 13,
             nameResId = R.string.artist_name_superman,
             imageResId = R.drawable.tzeitel,
-            totalPhotos = 4
         )
     )
 
@@ -193,7 +179,22 @@ object DataSource {
             category = Category.Nature,
             price = 79f,
             visits = 2800
+        ),
+        Photo(
+            id = 12,
+            title = R.string.architecture,
+            imageResId = R.drawable.architecture,
+            artist = artists[0],
+            category = Category.Buildings,
+            price = 766f,
+            visits = 21456
         )
     )
+    fun getPhotosByCategory(category: Category): List<Photo> {
+        return photos.filter { it.category == category }
+    }
+    fun getPhotosByArtist(artist: Artist): List<Photo> {
+        return photos.filter { it.artist.id == artist.id }
+    }
 
 }

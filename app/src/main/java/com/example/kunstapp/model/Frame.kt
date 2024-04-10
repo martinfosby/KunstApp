@@ -1,4 +1,4 @@
-package com.example.kunstapp.data
+package com.example.kunstapp.model
 
 enum class Frame(val price: Int, val width: Int, val height: Int) {
     None(0, 0,0),
