@@ -7,6 +7,7 @@ import com.example.kunstapp.model.Frame
 import com.example.kunstapp.data.OrderUiState
 import com.example.kunstapp.model.Photo
 import com.example.kunstapp.datasource.DataSource
+import com.example.kunstapp.model.Size
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,10 +18,13 @@ class OrderViewModel: ViewModel() {
     val uiState: StateFlow<OrderUiState> = _uiState.asStateFlow()
 
 
+
+
     fun setPhoto(photo: Photo) {
         _uiState.update {
             it.copy(
-                currentPhoto = photo
+                currentPhoto = photo,
+                price = photo.price + it.currentFramePrice + it.currentSizePrice
             )
         }
     }
@@ -36,14 +40,7 @@ class OrderViewModel: ViewModel() {
         }
     }
 
-    fun setFrame(frame: Frame) {
-        _uiState.update {
-            it.copy(
-                currentPhoto = it.currentPhoto.copy(frame = frame),
-                price = it.currentPhoto.price + frame.price
-            )
-        }
-    }
+
 
     fun removeFromShoppingCart(photo: Photo) {
         _uiState.update {
@@ -87,6 +84,32 @@ class OrderViewModel: ViewModel() {
             )
         }
 
+    }
+    fun setPrice() {
+        _uiState.update {
+            it.copy(
+                price = it.currentPhoto.price + it.currentFramePrice + it.currentSizePrice
+            )
+        }
+    }
+    fun setFrame(frame: Frame) {
+        _uiState.update {
+            it.copy(
+                currentPhoto = it.currentPhoto.copy(frame = frame),
+                currentFramePrice = frame.price,
+                price = it.currentPhoto.price + frame.price + it.currentSizePrice
+            )
+        }
+    }
+
+    fun setSize(size: Size) {
+        _uiState.update {
+            it.copy(
+                currentPhoto = it.currentPhoto.copy(size = size),
+                currentSizePrice = size.price,
+                price = it.currentPhoto.price + it.currentFramePrice + size.price
+            )
+        }
     }
 
 }

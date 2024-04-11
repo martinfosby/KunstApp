@@ -18,6 +18,8 @@ data class OrderUiState(
     val date: String = "",
     /** Total price for the order */
     val price: Float = currentPhoto.price,
+    val currentFramePrice: Float = currentPhoto.frame.price,
+    val currentSizePrice: Float = currentPhoto.size.price,
     /** Available pickup dates for the order*/
     val pickupOptions: List<String> = listOf()
 )

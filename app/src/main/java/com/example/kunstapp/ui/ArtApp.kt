@@ -146,6 +146,9 @@ fun ArtApp(
                     },
                     onFrameSelected = {
                         viewModel.setFrame(it)
+                    },
+                    onSizeSelected = {
+                        viewModel.setSize(it)
                     }
                 )
             }

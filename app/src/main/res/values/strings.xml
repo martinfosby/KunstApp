@@ -66,13 +66,13 @@
     <string name="photo8_title">Skyline Panorama</string>
     <string name="photo9_title">Urban Symmetry</string>
     <string name="photo10_title">Elevated Perspective</string>
-    <string name="calculated_price">Beregnet pris: %s</string>
-    <string name="price">Pris(inkl. ramme): %s</string>
+    <string name="calculated_price">Beregnet pris: %skr</string>
+    <string name="price_with_frame">Pris(inkl. ramme): %skr</string>
     <string name="frame_choice">Rammevalg</string>
     <string name="photo_details">Bildedetaljer</string>
     <string name="put_in_shopping_cart">Legg i handlekurv</string>
     <string name="home">Hjem</string>
-    <string name="steel_frame">stål frame</string>
+    <string name="metal_frame">metal</string>
     <string name="wood_frame">tre</string>
     <string name="plastic_frame">Plast</string>
     <string name="artist_name">Kunstner: %s</string>
@@ -91,6 +91,10 @@
     <string name="total_photos">Antall bilder: %d</string>
     <string name="most_expensive_photo">Dyreste bilde: %s</string>
     <string name="most_popular_photo">Mest populære bilde: %s</string>
+    <string name="photo_small">Lite</string>
+    <string name="photo_medium">Middels</string>
+    <string name="photo_large">Stort</string>
+    <string name="price">Pris: %.2fkr</string>
 
 
 </resources>
