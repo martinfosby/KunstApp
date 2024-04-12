@@ -8,6 +8,7 @@ import com.example.kunstapp.data.OrderUiState
 import com.example.kunstapp.model.Photo
 import com.example.kunstapp.datasource.DataSource
 import com.example.kunstapp.model.Size
+import com.example.kunstapp.model.Width
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -113,6 +114,16 @@ class OrderViewModel : ViewModel() {
             it.copy(
                 currentPhoto = it.currentPhoto.copy(
                     size = size,
+                ),
+            )
+        }
+    }
+
+    fun setWidth(width: Width) {
+        _uiState.update {
+            it.copy(
+                currentPhoto = it.currentPhoto.copy(
+                    width = width,
                 ),
             )
         }

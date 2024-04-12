@@ -109,16 +109,16 @@ fun PhotoBox(orderUiState: OrderUiState, modifier: Modifier = Modifier) {
         contentScale = ContentScale.Fit,
         modifier = Modifier
             .size(
-                dimensionResource(id = orderUiState.currentSize.sizeResId),
+                dimensionResource(id = orderUiState.currentPhoto.size.sizeResId),
             )
             .border(
                 BorderStroke(
-                    width = dimensionResource(id = orderUiState.currentWidth.width),
+                    width = dimensionResource(id = orderUiState.currentPhoto.width.width),
                     color = col
                 )
             )
-            .padding(dimensionResource(id = orderUiState.currentWidth.width))
-            .background(Color.Blue)
+            .padding(dimensionResource(id = orderUiState.currentPhoto.width.width))
+//            .background(Color.Blue)
     )
 
 }
@@ -132,9 +132,9 @@ fun CheckoutCart(
     onWidthSelected: (Width) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selectedFrame by rememberSaveable { mutableStateOf(orderUiStateState.currentFrame) }
-    var selectedSize by rememberSaveable { mutableStateOf(orderUiStateState.currentSize) }
-    var selectedWidth by rememberSaveable { mutableStateOf(orderUiStateState.currentWidth) }
+    var selectedFrame by rememberSaveable { mutableStateOf(orderUiStateState.currentPhoto.frame) }
+    var selectedSize by rememberSaveable { mutableStateOf(orderUiStateState.currentPhoto.size) }
+    var selectedWidth by rememberSaveable { mutableStateOf(orderUiStateState.currentPhoto.width) }
 
     Card {
         Column(
@@ -289,7 +289,7 @@ fun CheckoutCart(
             }
             Text(
                 text = stringResource(
-                    id = R.string.calculated_price, orderUiStateState.price
+                    id = R.string.calculated_price, orderUiStateState.currentPhoto.getTotalPrice()
                 ),
                 style = MaterialTheme.typography.labelMedium
             )
@@ -314,8 +314,6 @@ fun SummaryPreview() {
                 DataSource.photos[0],
                 currentPhotos = DataSource.photos.filter { it.artist.id == DataSource.artists[0].id },
                 currentArtist = DataSource.artists[0],
-                currentFrame = Frame.Metal,
-                currentWidth = Width.Medium
             ),
             onFrameSelected = {},
             onSizeSelected = {},
