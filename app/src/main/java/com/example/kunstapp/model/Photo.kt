@@ -19,4 +19,6 @@ data class Photo(
     var visits: Int = 0,
     var frame: Frame = Frame.None,
     var size: Size = Size.Medium,
-)
+    val width: Width = Width.None
+) {
+}

@@ -1,31 +1,17 @@
 <resources>
     <string name="app_name">KunstApp</string>
-    <string name="order_cupcakes">Order Cupcakes</string>
-    <string name="one_cupcake">One Cupcake</string>
-    <string name="six_cupcakes">Six Cupcakes</string>
-    <string name="twelve_cupcakes">Twelve Cupcakes</string>
-    <string name="choose_flavor">Choose Flavor</string>
-    <string name="vanilla">Vanilla</string>
-    <string name="chocolate">Chocolate</string>
-    <string name="red_velvet">Red Velvet</string>
-    <string name="salted_caramel">Salted Caramel</string>
-    <string name="coffee">Coffee</string>
-    <string name="special_flavor">Special Flavor</string>
+
     <string name="cancel">Cancel</string>
     <string name="next">Next</string>
     <string name="choose_pickup_date">Choose Pickup Date</string>
     <string name="order_summary">Order Summary</string>
     <string name="send">Send Order to Another App</string>
     <string name="quantity">Quantity</string>
-    <string name="flavor">Flavor</string>
     <string name="pickup_date">Pickup date</string>
     <string name="subtotal_price">Subtotal %s</string>
     <string name="total_price">Total %s</string>
-    <string name="new_cupcake_order">New Cupcake Order</string>
     <string name="order_details">Quantity: %1$s \nFlavor: %2$s \nPickup date: %3$s \nTotal: %4$s \n\nThank you!</string>
     <string name="back_button">Back</string>
-    <string name="category_name">Natur</string>
-    <string name="diverse">Diverse</string>
     <string name="summary">Bestill</string>
     <plurals name="cupcakes">
         <item quantity="one">%d cupcake</item>
@@ -69,7 +55,7 @@
     <string name="calculated_price">Beregnet pris: %skr</string>
     <string name="price_with_frame">Pris(inkl. ramme): %skr</string>
     <string name="frame_choice">Rammevalg</string>
-    <string name="photo_details">Bildedetaljer</string>
+    <string name="photo_details">Bildedetaljer:</string>
     <string name="put_in_shopping_cart">Legg i handlekurv</string>
     <string name="home">Hjem</string>
     <string name="metal_frame">metal</string>
@@ -81,6 +67,7 @@
     <string name="go_to_checkout">Gå til betaling</string>
     <string name="delete">Slett</string>
     <string name="frame">Ramme: %s</string>
+    <string name="frame_title">Ramme:</string>
     <string name="artist_name_superman">Superman</string>
     <string name="nature">Natur</string>
     <string name="food">Mat</string>
@@ -94,7 +81,11 @@
     <string name="photo_small">Lite</string>
     <string name="photo_medium">Middels</string>
     <string name="photo_large">Stort</string>
+    <string name="photo_huge">Enormt</string>
     <string name="price">Pris: %.2fkr</string>
+    <string name="frame_width">Ramme Bredde:</string>
+    <string name="width">%sdp</string>
+    <string name="size_title">Størrelse:</string>
 
 
 </resources>

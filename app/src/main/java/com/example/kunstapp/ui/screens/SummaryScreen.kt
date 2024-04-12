@@ -17,43 +17,49 @@ package com.example.kunstapp.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.kunstapp.R
 import com.example.kunstapp.model.Frame
 import com.example.kunstapp.data.OrderUiState
 import com.example.kunstapp.datasource.DataSource
 import com.example.kunstapp.model.Size
+import com.example.kunstapp.model.Width
 import com.example.kunstapp.ui.theme.KunstAppTheme
 
 
@@ -64,22 +70,25 @@ fun SummaryScreen(
     onHomeClicked: () -> Unit,
     onFrameSelected: (Frame) -> Unit,
     onSizeSelected: (Size) -> Unit,
-    modifier: Modifier = Modifier
+    onWidthSelected: (Width) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxSize()
     ) {
-        PhotoCard(orderUiState = orderUiState)
-        Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium)))
+        PhotoBox(
+            orderUiState = orderUiState,
+            modifier = Modifier
+        )
         CheckoutCart(
-                orderUiStateState = orderUiState,
-                onCheckoutClicked = onCheckoutClicked,
-                onFrameSelected = onFrameSelected,
-                onSizeSelected = onSizeSelected,
-            )
-        Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium)))
+            orderUiStateState = orderUiState,
+            onCheckoutClicked = onCheckoutClicked,
+            onFrameSelected = onFrameSelected,
+            onSizeSelected = onSizeSelected,
+            onWidthSelected = onWidthSelected,
+        )
         Button(onClick = onHomeClicked) {
             Text(text = stringResource(id = R.string.home))
         }
@@ -87,29 +96,31 @@ fun SummaryScreen(
 }
 
 @Composable
-fun PhotoCard(orderUiState: OrderUiState, modifier: Modifier = Modifier) {
-    val col = when(orderUiState.currentPhoto.frame){
+fun PhotoBox(orderUiState: OrderUiState, modifier: Modifier = Modifier) {
+    val col = when (orderUiState.currentPhoto.frame) {
         Frame.None -> Color.Transparent
         Frame.Metal -> Color.LightGray
         Frame.Wood -> Color.Yellow
         Frame.Plastic -> Color.DarkGray
     }
-    Card(
-        modifier = modifier
-            .padding(dimensionResource(id = R.dimen.padding_small)) // Add padding to the card
-    ) {
-        Box(
-            modifier = Modifier
-                .border(border = BorderStroke(width = dimensionResource(id = R.dimen.padding_medium), color = col)
+    Image(
+        painter = painterResource(id = orderUiState.currentPhoto.imageResId),
+        contentDescription = null, // Provide a meaningful description for accessibility
+        contentScale = ContentScale.Fit,
+        modifier = Modifier
+            .size(
+                dimensionResource(id = orderUiState.currentSize.sizeResId),
             )
-        ) {
-            Image(
-                painter = painterResource(id = orderUiState.currentPhoto.imageResId),
-                contentDescription = null, // Provide a meaningful description for accessibility
-                modifier = Modifier.size(dimensionResource(id = R.dimen.photo_large))
+            .border(
+                BorderStroke(
+                    width = dimensionResource(id = orderUiState.currentWidth.width),
+                    color = col
+                )
             )
-        }
-    }
+            .padding(dimensionResource(id = orderUiState.currentWidth.width))
+            .background(Color.Blue)
+    )
+
 }
 
 @Composable
@@ -118,98 +129,174 @@ fun CheckoutCart(
     onCheckoutClicked: () -> Unit,
     onFrameSelected: (Frame) -> Unit,
     onSizeSelected: (Size) -> Unit,
+    onWidthSelected: (Width) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selectedFrame by rememberSaveable { mutableStateOf(orderUiStateState.currentPhoto.frame) }
-    var selectedSize by rememberSaveable { mutableStateOf(orderUiStateState.currentPhoto.size) }
+    var selectedFrame by rememberSaveable { mutableStateOf(orderUiStateState.currentFrame) }
+    var selectedSize by rememberSaveable { mutableStateOf(orderUiStateState.currentSize) }
+    var selectedWidth by rememberSaveable { mutableStateOf(orderUiStateState.currentWidth) }
 
     Card {
-        Column {
-            Card {
-                Text(text = stringResource(id = R.string.photo_details))
-                Text(text = stringResource(id = R.string.artist_name, stringResource(id = orderUiStateState.currentPhoto.artist.nameResId)))
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = stringResource(id = R.string.photo_details),
+                style = MaterialTheme.typography.labelMedium
+            )
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small)),
+            ) {
+                Text(
+                    text = stringResource(
+                        id = R.string.artist_name,
+                        stringResource(id = orderUiStateState.currentPhoto.artist.nameResId)
+                    )
+                )
+                Text(
+                    text = stringResource(
+                        id = R.string.price,
+                        orderUiStateState.currentPhoto.price
+                    )
+                )
             }
-            Card {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                ) {
-                    Frame.entries.forEach { frame ->
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier
-                                .padding(dimensionResource(id = R.dimen.padding_small))
-                                .selectable(
-                                    selected = selectedFrame == frame,
-                                    onClick = {
-                                        selectedFrame = frame
-                                        onFrameSelected(frame)
-                                    }
-                                ),
-                        ) {
-                            Text(text = stringResource(id = frame.title), style = MaterialTheme.typography.labelMedium)
-                            Text(
-                                text = stringResource(
-                                    id = R.string.price, frame.price
-                                ),
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                            RadioButton(
+            Text(
+                text = stringResource(id = R.string.frame_title),
+                style = MaterialTheme.typography.labelMedium
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+            ) {
+                Frame.entries.forEach { frame ->
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .selectable(
                                 selected = selectedFrame == frame,
                                 onClick = {
                                     selectedFrame = frame
                                     onFrameSelected(frame)
                                 }
                             )
-                        }
+                            .padding(start = dimensionResource(id = R.dimen.padding_small)),
+                    ) {
+                        Text(
+                            text = stringResource(id = frame.title),
+                            style = MaterialTheme.typography.labelMedium
+                        )
+                        Text(
+                            text = stringResource(
+                                id = R.string.price, frame.price
+                            ),
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                        RadioButton(
+                            selected = selectedFrame == frame,
+                            onClick = {
+                                selectedFrame = frame
+                                onFrameSelected(frame)
+                            }
+                        )
                     }
                 }
+            }
+            if (selectedFrame != Frame.None) {
+                Text(
+                    text = stringResource(id = R.string.frame_width),
+                    style = MaterialTheme.typography.labelMedium
+                )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                 ) {
-                    Size.entries.forEach { size ->
+                    Width.entries.forEach { width ->
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier
-                                .padding(dimensionResource(id = R.dimen.padding_small))
                                 .selectable(
-                                    selected = selectedSize == size,
+                                    selected = selectedWidth == width,
                                     onClick = {
-                                        selectedSize = size
-                                        onSizeSelected(size)
+                                        selectedWidth = width
+                                        onWidthSelected(width)
                                     }
-                                ),
+                                )
+                                .padding(start = dimensionResource(id = R.dimen.padding_small)),
                         ) {
-                            Text(text = stringResource(id = size.titleResId), style = MaterialTheme.typography.labelMedium)
                             Text(
                                 text = stringResource(
-                                    id = R.string.price, size.price
+                                    id = R.string.width,
+                                    dimensionResource(id = width.width).value.toString()
+                                ), style = MaterialTheme.typography.labelMedium
+                            )
+                            Text(
+                                text = stringResource(
+                                    id = R.string.price, width.price
                                 ),
                                 style = MaterialTheme.typography.labelSmall
                             )
                             RadioButton(
+                                selected = selectedWidth == width,
+                                onClick = {
+                                    selectedWidth = width
+                                    onWidthSelected(width)
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+            Text(
+                text = stringResource(id = R.string.size_title),
+                style = MaterialTheme.typography.labelMedium
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+            ) {
+                Size.entries.forEach { size ->
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .selectable(
                                 selected = selectedSize == size,
                                 onClick = {
                                     selectedSize = size
                                     onSizeSelected(size)
                                 }
                             )
-                        }
+                            .padding(start = dimensionResource(id = R.dimen.padding_small)),
+                    ) {
+                        Text(
+                            text = stringResource(id = size.titleResId),
+                            style = MaterialTheme.typography.labelMedium
+                        )
+                        Text(
+                            text = stringResource(
+                                id = R.string.price, size.price
+                            ),
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                        RadioButton(
+                            selected = selectedSize == size,
+                            onClick = {
+                                selectedSize = size
+                                onSizeSelected(size)
+                            }
+                        )
                     }
                 }
-
             }
-            Card {
-                Text(
-                    text = stringResource(
-                        id = R.string.calculated_price, orderUiStateState.price
-                    )
-                )
-
-            }
-            Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small)))
-            Button(onClick = onCheckoutClicked ) {
+            Text(
+                text = stringResource(
+                    id = R.string.calculated_price, orderUiStateState.price
+                ),
+                style = MaterialTheme.typography.labelMedium
+            )
+            Button(
+                onClick = onCheckoutClicked,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
                 Text(text = stringResource(id = R.string.put_in_shopping_cart))
             }
         }
@@ -224,12 +311,15 @@ fun SummaryPreview() {
             onCheckoutClicked = {},
             onHomeClicked = {},
             orderUiState = OrderUiState(
-                DataSource.photos[11],
+                DataSource.photos[0],
                 currentPhotos = DataSource.photos.filter { it.artist.id == DataSource.artists[0].id },
-                currentArtist = DataSource.artists[0] )
-            ,
+                currentArtist = DataSource.artists[0],
+                currentFrame = Frame.Metal,
+                currentWidth = Width.Medium
+            ),
             onFrameSelected = {},
             onSizeSelected = {},
+            onWidthSelected = {},
             modifier = Modifier.fillMaxHeight()
         )
     }

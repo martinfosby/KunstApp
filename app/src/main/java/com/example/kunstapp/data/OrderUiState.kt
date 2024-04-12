@@ -3,7 +3,10 @@ package com.example.kunstapp.data
 import com.example.kunstapp.datasource.DataSource
 import com.example.kunstapp.model.Artist
 import com.example.kunstapp.model.Category
+import com.example.kunstapp.model.Frame
 import com.example.kunstapp.model.Photo
+import com.example.kunstapp.model.Size
+import com.example.kunstapp.model.Width
 
 data class OrderUiState(
     val currentPhoto: Photo = DataSource.photos[0],
@@ -18,8 +21,9 @@ data class OrderUiState(
     val date: String = "",
     /** Total price for the order */
     val price: Float = currentPhoto.price,
-    val currentFramePrice: Float = currentPhoto.frame.price,
-    val currentSizePrice: Float = currentPhoto.size.price,
+    val currentFrame: Frame = currentPhoto.frame,
+    val currentSize: Size = currentPhoto.size,
+    val currentWidth: Width = currentPhoto.width,
     /** Available pickup dates for the order*/
     val pickupOptions: List<String> = listOf()
 )

@@ -8,6 +8,7 @@ import com.example.kunstapp.data.OrderUiState
 import com.example.kunstapp.model.Photo
 import com.example.kunstapp.datasource.DataSource
 import com.example.kunstapp.model.Size
+import com.example.kunstapp.model.Width
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +25,7 @@ class OrderViewModel: ViewModel() {
         _uiState.update {
             it.copy(
                 currentPhoto = photo,
-                price = photo.price + it.currentFramePrice + it.currentSizePrice
+                price = photo.price + it.currentFrame.price + it.currentSize.price + it.currentWidth.price
             )
         }
     }
@@ -88,16 +89,17 @@ class OrderViewModel: ViewModel() {
     fun setPrice() {
         _uiState.update {
             it.copy(
-                price = it.currentPhoto.price + it.currentFramePrice + it.currentSizePrice
+                price = it.currentPhoto.price + it.currentFrame.price + it.currentSize.price
             )
         }
     }
+
     fun setFrame(frame: Frame) {
         _uiState.update {
             it.copy(
                 currentPhoto = it.currentPhoto.copy(frame = frame),
-                currentFramePrice = frame.price,
-                price = it.currentPhoto.price + frame.price + it.currentSizePrice
+                currentFrame = frame,
+                price = it.currentPhoto.price + frame.price + it.currentSize.price + it.currentWidth.price
             )
         }
     }
@@ -106,10 +108,22 @@ class OrderViewModel: ViewModel() {
         _uiState.update {
             it.copy(
                 currentPhoto = it.currentPhoto.copy(size = size),
-                currentSizePrice = size.price,
-                price = it.currentPhoto.price + it.currentFramePrice + size.price
+                currentSize = size,
+                price = it.currentPhoto.price + it.currentFrame.price + size.price + it.currentWidth.price
             )
         }
     }
+
+    fun setWidth(width: Width) {
+        _uiState.update {
+            it.copy(
+                currentPhoto = it.currentPhoto.copy(width = width),
+                currentWidth = width,
+                price = it.currentPhoto.price + it.currentFrame.price + it.currentSize.price + width.price
+            )
+        }
+    }
+
+
 
 }

@@ -23,4 +23,10 @@
     <dimen name="photo_small">100dp</dimen>
     <dimen name="photo_medium">200dp</dimen>
     <dimen name="photo_large">300dp</dimen>
+    <dimen name="photo_huge">350dp</dimen>
+    <dimen name="no_width">0dp</dimen>
+    <dimen name="small_width">4dp</dimen>
+    <dimen name="medium_width">8dp</dimen>
+    <dimen name="large_width">12dp</dimen>
+
 </resources>
