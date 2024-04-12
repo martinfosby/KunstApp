@@ -188,7 +188,117 @@ object DataSource {
             category = Category.Buildings,
             price = 766f,
             visits = 21456
-        )
+        ),
+        Photo(
+            id = 13,
+            title = R.string.cupcake,
+            imageResId = R.drawable.cupcake,
+            artist = artists[0],
+            category = Category.Food,
+            price = 645f,
+            visits = 1323
+        ),
+        Photo(
+            id = 14,
+            title = R.string.cupcake,
+            imageResId = R.drawable.donut,
+            artist = artists[0],
+            category = Category.Food,
+            price = 645f,
+            visits = 1323
+        ),
+        Photo(
+            id = 15,
+            title = R.string.cupcake,
+            imageResId = R.drawable.gingerbread,
+            artist = artists[0],
+            category = Category.Food,
+            price = 645f,
+            visits = 1323
+        ),
+        Photo(
+            id = 16,
+            title = R.string.cupcake,
+            imageResId = R.drawable.honeycomb,
+            artist = artists[0],
+            category = Category.Food,
+            price = 645f,
+            visits = 1323
+        ),
+        Photo(
+            id = 17,
+            title = R.string.cupcake,
+            imageResId = R.drawable.icecreamsandwich,
+            artist = artists[0],
+            category = Category.Food,
+            price = 645f,
+            visits = 1323
+        ),
+        Photo(
+            id = 18,
+            title = R.string.cupcake,
+            imageResId = R.drawable.jellybean,
+            artist = artists[0],
+            category = Category.Food,
+            price = 645f,
+            visits = 1323
+        ),
+        Photo(
+            id = 19,
+            title = R.string.cupcake,
+            imageResId = R.drawable.kitkat,
+            artist = artists[0],
+            category = Category.Food,
+            price = 645f,
+            visits = 1323
+        ),
+        Photo(
+            id = 20,
+            title = R.string.cupcake,
+            imageResId = R.drawable.lollipop,
+            artist = artists[0],
+            category = Category.Food,
+            price = 645f,
+            visits = 1323
+        ),
+        Photo(
+            id = 21,
+            title = R.string.cupcake,
+            imageResId = R.drawable.froyo,
+            artist = artists[0],
+            category = Category.Food,
+            price = 645f,
+            visits = 1323
+        ),
+        Photo(
+            id = 22,
+            title = R.string.cupcake,
+            imageResId = R.drawable.marshmallow,
+            artist = artists[0],
+            category = Category.Food,
+            price = 645f,
+            visits = 1323
+        ),
+        Photo(
+            id = 23,
+            title = R.string.cupcake,
+            imageResId = R.drawable.nougat,
+            artist = artists[0],
+            category = Category.Food,
+            price = 645f,
+            visits = 1323
+        ),
+        Photo(
+            id = 24,
+            title = R.string.cupcake,
+            imageResId = R.drawable.oreo,
+            artist = artists[0],
+            category = Category.Food,
+            price = 645f,
+            visits = 1323
+        ),
+
+
     )
     fun getPhotosByCategory(category: Category): List<Photo> {
         return photos.filter { it.category == category }

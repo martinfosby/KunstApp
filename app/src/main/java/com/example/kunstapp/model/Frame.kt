@@ -1,16 +1,24 @@
 package com.example.kunstapp.model
 
 import androidx.annotation.StringRes
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.graphics.Color
 import com.example.kunstapp.R
+import com.example.kunstapp.ui.theme.frame_color_metal
+import com.example.kunstapp.ui.theme.frame_color_plastic
+import com.example.kunstapp.ui.theme.frame_color_wood
 
 enum class Frame(
-    val price: Float,
-    val width: Int,
+    var price: Float,
     @StringRes val title: Int,
+    var color: Color,
+    var width: Width = Width.None,
 ) {
-    None(0f, 0, R.string.no_frame),
-    Metal(200f, 300, R.string.metal_frame),   // Metal frame with price, width
-    Wood(100f, 250, R.string.wood_frame),    // Wood frame with price, width, and height
-    Plastic(50f, 200, R.string.plastic_frame)   // Plastic frame with price, width, and height
+
+    None(0f, R.string.no_frame, Color.Unspecified),
+    Metal(200f, R.string.metal_frame, frame_color_metal),   // Metal frame with price, width
+    Wood(100f, R.string.wood_frame, frame_color_wood),    // Wood frame with price, width, and height
+    Plastic(50f, R.string.plastic_frame, frame_color_plastic);   // Plastic frame with price, width, and height;
 }
 

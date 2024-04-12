@@ -17,27 +17,20 @@ package com.example.kunstapp.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,14 +39,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.kunstapp.R
 import com.example.kunstapp.model.Frame
 import com.example.kunstapp.data.OrderUiState
@@ -80,7 +70,6 @@ fun SummaryScreen(
     ) {
         PhotoBox(
             orderUiState = orderUiState,
-            modifier = Modifier
         )
         CheckoutCart(
             orderUiStateState = orderUiState,
@@ -89,7 +78,9 @@ fun SummaryScreen(
             onSizeSelected = onSizeSelected,
             onWidthSelected = onWidthSelected,
         )
-        Button(onClick = onHomeClicked) {
+        Button(
+            onClick = onHomeClicked,
+        ) {
             Text(text = stringResource(id = R.string.home))
         }
     }
@@ -97,12 +88,7 @@ fun SummaryScreen(
 
 @Composable
 fun PhotoBox(orderUiState: OrderUiState, modifier: Modifier = Modifier) {
-    val col = when (orderUiState.currentPhoto.frame) {
-        Frame.None -> Color.Transparent
-        Frame.Metal -> Color.LightGray
-        Frame.Wood -> Color.Yellow
-        Frame.Plastic -> Color.DarkGray
-    }
+
     Image(
         painter = painterResource(id = orderUiState.currentPhoto.imageResId),
         contentDescription = null, // Provide a meaningful description for accessibility
@@ -114,11 +100,11 @@ fun PhotoBox(orderUiState: OrderUiState, modifier: Modifier = Modifier) {
             .border(
                 BorderStroke(
                     width = dimensionResource(id = orderUiState.currentPhoto.width.width),
-                    color = col
+                    color = orderUiState.currentPhoto.frame.color
                 )
             )
             .padding(dimensionResource(id = orderUiState.currentPhoto.width.width))
-//            .background(Color.Blue)
+//            .aspectRatio(16f/9f)
     )
 
 }
@@ -136,7 +122,7 @@ fun CheckoutCart(
     var selectedSize by rememberSaveable { mutableStateOf(orderUiStateState.currentPhoto.size) }
     var selectedWidth by rememberSaveable { mutableStateOf(orderUiStateState.currentPhoto.width) }
 
-    Card {
+    Card(modifier = modifier) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

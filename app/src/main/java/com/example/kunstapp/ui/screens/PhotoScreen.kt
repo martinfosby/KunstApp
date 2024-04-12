@@ -13,17 +13,24 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ShapeDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.kunstapp.R
 import com.example.kunstapp.data.OrderUiState
@@ -47,7 +54,7 @@ fun PhotoScreen(
             contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_medium)),
             modifier = modifier
         ) {
-            items(orderUiState.currentPhotos) {photo ->
+            items(orderUiState.currentPhotos) { photo ->
                 PhotoItemCard(
                     photo = photo,
                     modifier = Modifier.clickable { onPhotoClicked(photo) }
@@ -73,13 +80,25 @@ fun PhotoItemCard(photo: Photo, modifier: Modifier = Modifier) {
                 .wrapContentSize()
                 .size(dimensionResource(id = R.dimen.photo_medium))
         )
-        Text(
-            text = stringResource(id = photo.title),
-            modifier = Modifier
-                .padding(dimensionResource(id = R.dimen.padding_small))
-                .background(Color.White),
-            style = MaterialTheme.typography.titleMedium
-        )
+        Surface(
+            shape = RoundedCornerShape(dimensionResource(id = R.dimen.padding_small)),
+            modifier = Modifier.padding(
+                top = dimensionResource(
+                    id = R.dimen.padding_small
+                )
+            )
+        ) {
+            Text(
+                text = stringResource(id = photo.title),
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Center,
+                overflow = TextOverflow.Clip,
+                softWrap = false,
+                modifier = Modifier
+                    .padding(dimensionResource(id = R.dimen.padding_small))
+            )
+        }
+
     }
 }
 
@@ -92,8 +111,8 @@ fun PreviewPhotoScreen() {
             orderUiState = OrderUiState(
                 DataSource.photos[0],
                 currentPhotos = DataSource.photos.filter { it.artist.id == DataSource.artists[0].id },
-                currentArtist = DataSource.artists[0] )
-            ,
+                currentArtist = DataSource.artists[0]
+            ),
             onPhotoClicked = {},
             onHomeClicked = {}
         )

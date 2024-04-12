@@ -77,7 +77,7 @@ fun ArtistListItem(
     modifier: Modifier = Modifier
 ) {
     Card(
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = dimensionResource(id = R.dimen.small_elevation)),
         modifier = modifier,
     ) {
         Row(
@@ -99,7 +99,7 @@ fun ArtistListItem(
                     contentScale = ContentScale.FillWidth
                 )
             }
-            Spacer(Modifier.width(16.dp))
+            Spacer(Modifier.width(dimensionResource(id = R.dimen.padding_large)))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = stringResource(artist.nameResId),
@@ -110,7 +110,7 @@ fun ArtistListItem(
                         id = R.string.total_photos,
                         artist.getTotalPhotos()
                     ),
-                    style = MaterialTheme.typography.labelSmall
+                    style = MaterialTheme.typography.bodyMedium
                 )
                 artist.getMostExpensivePhoto()?.let { mostExpensivePhoto ->
                     Text(
@@ -118,7 +118,7 @@ fun ArtistListItem(
                             id = R.string.most_expensive_photo,
                             stringResource(id = mostExpensivePhoto.title)
                         ),
-                        style = MaterialTheme.typography.labelSmall
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
                 artist.getMostPopularPhoto()?.let { mostPopularPhoto ->
@@ -127,7 +127,7 @@ fun ArtistListItem(
                             id = R.string.most_popular_photo,
                             stringResource(id = mostPopularPhoto.title)
                         ),
-                        style = MaterialTheme.typography.labelSmall
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
             }

@@ -9,6 +9,7 @@ import com.example.kunstapp.model.Photo
 import com.example.kunstapp.datasource.DataSource
 import com.example.kunstapp.model.Size
 import com.example.kunstapp.model.Width
+import com.example.kunstapp.ui.screens.ArtScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,6 +23,7 @@ class OrderViewModel : ViewModel() {
         _uiState.value.shoppingCart.clear()
     }
 
+
     fun setPhoto(photo: Photo) {
         _uiState.update {
             it.copy(
@@ -30,8 +32,12 @@ class OrderViewModel : ViewModel() {
         }
     }
 
-    fun getQuantity(): Int {
-        return _uiState.value.shoppingCart.size
+    fun setQuantity() {
+        _uiState.update {
+            it.copy(
+                quantity = it.shoppingCart.size
+            )
+        }
     }
 
     fun addToShopping() {
@@ -40,7 +46,8 @@ class OrderViewModel : ViewModel() {
                 shoppingCart = it.shoppingCart.apply {
                     add(_uiState.value.currentPhoto)
                 },
-                shoppingCartEmpty = it.shoppingCart.isEmpty()
+                shoppingCartEmpty = it.shoppingCart.isEmpty(),
+                quantity = it.quantity + 1
             )
         }
     }
@@ -52,7 +59,8 @@ class OrderViewModel : ViewModel() {
                 shoppingCart = it.shoppingCart.apply {
                     remove(photo)
                 },
-                shoppingCartEmpty = it.shoppingCart.isEmpty()
+                shoppingCartEmpty = it.shoppingCart.isEmpty(),
+                quantity = it.quantity - 1
             )
         }
     }
@@ -93,8 +101,11 @@ class OrderViewModel : ViewModel() {
     fun setPrice() {
         _uiState.update { currentState ->
             var totalPrice: Float = 0.0f
-            currentState.shoppingCart.forEach { totalPrice += it.price }
-            currentState.copy(price = totalPrice)
+            currentState.shoppingCart.forEach { totalPrice += it.getTotalPrice() }
+            currentState.copy(
+                price = totalPrice,
+                mvaPrice = totalPrice * currentState.mva
+            )
         }
     }
 
@@ -128,5 +139,6 @@ class OrderViewModel : ViewModel() {
             )
         }
     }
+
 
 }

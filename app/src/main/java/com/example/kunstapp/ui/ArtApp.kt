@@ -111,6 +111,7 @@ fun ArtApp(
             composable(route = ArtScreen.Artists.name) {
                 ArtistScreen(
                     onArtistClicked = {
+                        ArtScreen.Photos.title = it.nameResId
                         viewModel.setArtist(it)
                         viewModel.setPhotosFromArtist(it)
                         navController.navigate(ArtScreen.Photos.name)
@@ -119,6 +120,7 @@ fun ArtApp(
             }
             composable(route = ArtScreen.Categories.name) {
                 CategoryScreen {
+                    ArtScreen.Photos.title = it.desc
                     viewModel.setPhotosFromCategory(it)
                     navController.navigate(ArtScreen.Photos.name)
                 }
@@ -140,6 +142,7 @@ fun ArtApp(
                     orderUiState = uiState,
                     onCheckoutClicked = {
                         viewModel.addToShopping()
+                        viewModel.setPrice()
                         navController.navigate(ArtScreen.Photos.name)
                     },
                     onHomeClicked = {

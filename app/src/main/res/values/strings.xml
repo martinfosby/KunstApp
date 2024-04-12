@@ -6,7 +6,7 @@
     <string name="choose_pickup_date">Choose Pickup Date</string>
     <string name="order_summary">Order Summary</string>
     <string name="send">Send Order to Another App</string>
-    <string name="quantity">Quantity</string>
+    <string name="quantity">Antall valgte bilder: %d</string>
     <string name="pickup_date">Pickup date</string>
     <string name="subtotal_price">Subtotal %s</string>
     <string name="total_price">Total %s</string>
@@ -39,6 +39,7 @@
     <string name="artist_name_michael">Michael</string>
     <string name="artist_name_lisa">Lisa</string>
 
+    <string name="cupcake">Muffins</string>
     <string name="skyscraper">Høyhus</string>
     <string name="skyline">Skyline</string>
     <string name="grass">Gresseng</string>
@@ -86,6 +87,11 @@
     <string name="frame_width">Ramme Bredde:</string>
     <string name="width">%sdp</string>
     <string name="size_title">Størrelse:</string>
+    <string name="no_width">Ingen bredde</string>
+    <string name="small_width">Lite bredde</string>
+    <string name="medium_width">Medium bredde</string>
+    <string name="large_width">Stor bredde</string>
+    <string name="total_price_with_mva">Totalpris inkl. mva: %.2fkr</string>
 
 
 </resources>
