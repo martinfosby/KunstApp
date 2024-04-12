@@ -19,6 +19,11 @@ data class Photo(
     var visits: Int = 0,
     var frame: Frame = Frame.None,
     var size: Size = Size.Medium,
+) {
+    fun getTotalPrice(): Float {
+        return price + frame.price + size.price
+    }
+}
     val width: Width = Width.None
 ) {
 }
