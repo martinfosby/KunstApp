@@ -29,6 +29,9 @@ fun CheckoutScreen(orderUiState: OrderUiState, modifier: Modifier = Modifier) {
                     }
                 }
             }
+            Column {
+                Text(text = stringResource(id = R.string.total_price, orderUiState.price))
+            }
 
         }
     }

@@ -203,7 +203,7 @@ fun CheckoutCart(
             Card {
                 Text(
                     text = stringResource(
-                        id = R.string.calculated_price, orderUiStateState.price
+                        id = R.string.calculated_price, orderUiStateState.currentPhoto.getTotalPrice()
                     )
                 )
 

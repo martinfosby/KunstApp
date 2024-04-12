@@ -13,20 +13,24 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class OrderViewModel: ViewModel() {
+class OrderViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(OrderUiState())
     val uiState: StateFlow<OrderUiState> = _uiState.asStateFlow()
 
-
-
+    fun resetOrder() {
+        _uiState.value.shoppingCart.clear()
+    }
 
     fun setPhoto(photo: Photo) {
         _uiState.update {
             it.copy(
                 currentPhoto = photo,
-                price = photo.price + it.currentFramePrice + it.currentSizePrice
             )
         }
+    }
+
+    fun getQuantity(): Int {
+        return _uiState.value.shoppingCart.size
     }
 
     fun addToShopping() {
@@ -39,7 +43,6 @@ class OrderViewModel: ViewModel() {
             )
         }
     }
-
 
 
     fun removeFromShoppingCart(photo: Photo) {
@@ -85,19 +88,22 @@ class OrderViewModel: ViewModel() {
         }
 
     }
+
     fun setPrice() {
-        _uiState.update {
-            it.copy(
-                price = it.currentPhoto.price + it.currentFramePrice + it.currentSizePrice
-            )
+        _uiState.update { currentState ->
+            var totalPrice: Float = 0.0f
+            currentState.shoppingCart.forEach { totalPrice += it.price }
+            currentState.copy(price = totalPrice)
         }
     }
+
+
     fun setFrame(frame: Frame) {
         _uiState.update {
             it.copy(
-                currentPhoto = it.currentPhoto.copy(frame = frame),
-                currentFramePrice = frame.price,
-                price = it.currentPhoto.price + frame.price + it.currentSizePrice
+                currentPhoto = it.currentPhoto.copy(
+                    frame = frame,
+                ),
             )
         }
     }
@@ -105,9 +111,9 @@ class OrderViewModel: ViewModel() {
     fun setSize(size: Size) {
         _uiState.update {
             it.copy(
-                currentPhoto = it.currentPhoto.copy(size = size),
-                currentSizePrice = size.price,
-                price = it.currentPhoto.price + it.currentFramePrice + size.price
+                currentPhoto = it.currentPhoto.copy(
+                    size = size,
+                ),
             )
         }
     }

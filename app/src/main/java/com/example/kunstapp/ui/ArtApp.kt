@@ -96,6 +96,7 @@ fun ArtApp(
                         navController.navigate(ArtScreen.Categories.name)
                     },
                     onCheckoutButtonClicked = {
+                        viewModel.setPrice()
                         navController.navigate(ArtScreen.Checkout.name)
                     },
                     onDeleteButtonClicked = {
