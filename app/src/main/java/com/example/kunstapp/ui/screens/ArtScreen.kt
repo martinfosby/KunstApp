@@ -9,4 +9,5 @@ enum class ArtScreen(@StringRes val title: Int) {
     Categories(title = R.string.categories),
     Photos(title = R.string.photos),
     Summary(title = R.string.summary),
+    Checkout(title = R.string.checkout)
 }

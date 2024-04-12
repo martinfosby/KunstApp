@@ -27,6 +27,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kunstapp.R
 import com.example.kunstapp.ui.screens.ArtistScreen
 import com.example.kunstapp.ui.screens.ArtScreen
+import com.example.kunstapp.ui.screens.CategoryScreen
+import com.example.kunstapp.ui.screens.CheckoutScreen
 import com.example.kunstapp.ui.screens.PhotoScreen
 import com.example.kunstapp.ui.screens.StartOrderScreen
 import com.example.kunstapp.ui.screens.SummaryScreen
@@ -85,11 +87,20 @@ fun ArtApp(
         ) {
             composable(route = ArtScreen.Start.name) {
                 StartOrderScreen(
+                    orderUiState = uiState,
+                    shoppingCartEmpty = uiState.shoppingCartEmpty,
                     onArtistButtonClicked = {
                         navController.navigate(ArtScreen.Artists.name)
                     },
                     onCategoryButtonClicked = {
                         navController.navigate(ArtScreen.Categories.name)
+                    },
+                    onCheckoutButtonClicked = {
+                        navController.navigate(ArtScreen.Checkout.name)
+                    },
+                    onDeleteButtonClicked = {
+                        viewModel.removeFromShoppingCart(it)
+                        navController.navigate(ArtScreen.Start.name)
                     },
                     modifier = Modifier
                         .fillMaxSize()
@@ -99,31 +110,50 @@ fun ArtApp(
             composable(route = ArtScreen.Artists.name) {
                 ArtistScreen(
                     onArtistClicked = {
+                        viewModel.setArtist(it)
+                        viewModel.setPhotosFromArtist(it)
                         navController.navigate(ArtScreen.Photos.name)
                     }
                 )
             }
+            composable(route = ArtScreen.Categories.name) {
+                CategoryScreen {
+                    viewModel.setPhotosFromCategory(it)
+                    navController.navigate(ArtScreen.Photos.name)
+                }
+            }
             composable(route = ArtScreen.Photos.name) {
                 PhotoScreen(
+                    orderUiState = uiState,
                     onPhotoClicked = {
-                        viewModel.updatePhoto(it)
+                        viewModel.setPhoto(it)
                         navController.navigate(ArtScreen.Summary.name)
-                    }
+                    },
+                    onHomeClicked = {
+                        navController.navigate(ArtScreen.Start.name)
+                    },
                 )
             }
             composable(route = ArtScreen.Summary.name) {
-                uiState.currentPhoto?.let { it1 ->
-                    SummaryScreen(
-                        photo = it1,
-                        onCheckoutClicked = {
-                            viewModel.addToShopping(it1)
-                            navController.navigate(ArtScreen.Photos.name)
-                        },
-                        onHomeClicked = {
-                            navController.navigate(ArtScreen.Start.name)
-                        }
-                    )
-                }
+                SummaryScreen(
+                    orderUiState = uiState,
+                    onCheckoutClicked = {
+                        viewModel.addToShopping()
+                        navController.navigate(ArtScreen.Photos.name)
+                    },
+                    onHomeClicked = {
+                        navController.navigate(ArtScreen.Start.name)
+                    },
+                    onFrameSelected = {
+                        viewModel.setFrame(it)
+                    },
+                    onSizeSelected = {
+                        viewModel.setSize(it)
+                    }
+                )
+            }
+            composable(route = ArtScreen.Checkout.name) {
+                CheckoutScreen(orderUiState = uiState)
             }
 
         }

@@ -1,8 +1,13 @@
 package com.example.kunstapp.ui
 
 import androidx.lifecycle.ViewModel
+import com.example.kunstapp.model.Artist
+import com.example.kunstapp.model.Category
+import com.example.kunstapp.model.Frame
 import com.example.kunstapp.data.OrderUiState
-import com.example.kunstapp.data.Photo
+import com.example.kunstapp.model.Photo
+import com.example.kunstapp.datasource.DataSource
+import com.example.kunstapp.model.Size
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,21 +18,98 @@ class OrderViewModel: ViewModel() {
     val uiState: StateFlow<OrderUiState> = _uiState.asStateFlow()
 
 
-    fun updatePhoto(photo: Photo) {
+
+
+    fun setPhoto(photo: Photo) {
         _uiState.update {
             it.copy(
-                currentPhoto = photo
+                currentPhoto = photo,
+                price = photo.price + it.currentFramePrice + it.currentSizePrice
             )
         }
     }
 
-    fun addToShopping(photo: Photo) {
-//        _uiState.update {current_state ->
-//            current_state.copy(
-//                shoppingCart = current_state.shoppingCart._
-//            )
-//        }
-        _uiState.value.shoppingCart.add(photo)
+    fun addToShopping() {
+        _uiState.update {
+            it.copy(
+                shoppingCart = it.shoppingCart.apply {
+                    add(_uiState.value.currentPhoto)
+                },
+                shoppingCartEmpty = it.shoppingCart.isEmpty()
+            )
+        }
+    }
+
+
+
+    fun removeFromShoppingCart(photo: Photo) {
+        _uiState.update {
+            it.copy(
+                shoppingCart = it.shoppingCart.apply {
+                    remove(photo)
+                },
+                shoppingCartEmpty = it.shoppingCart.isEmpty()
+            )
+        }
+    }
+
+    fun setArtist(artist: Artist) {
+        _uiState.update {
+            it.copy(
+                currentArtist = artist
+            )
+        }
+    }
+
+    fun setCategory(category: Category) {
+        _uiState.update {
+            it.copy(
+                currentCategory = category
+            )
+        }
+    }
+
+    fun setPhotosFromArtist(artist: Artist) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                currentPhotos = DataSource.photos.filter { it.artist.id == artist.id }
+            )
+        }
+    }
+
+    fun setPhotosFromCategory(category: Category) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                currentPhotos = DataSource.photos.filter { it.category.id == category.id }
+            )
+        }
+
+    }
+    fun setPrice() {
+        _uiState.update {
+            it.copy(
+                price = it.currentPhoto.price + it.currentFramePrice + it.currentSizePrice
+            )
+        }
+    }
+    fun setFrame(frame: Frame) {
+        _uiState.update {
+            it.copy(
+                currentPhoto = it.currentPhoto.copy(frame = frame),
+                currentFramePrice = frame.price,
+                price = it.currentPhoto.price + frame.price + it.currentSizePrice
+            )
+        }
+    }
+
+    fun setSize(size: Size) {
+        _uiState.update {
+            it.copy(
+                currentPhoto = it.currentPhoto.copy(size = size),
+                currentSizePrice = size.price,
+                price = it.currentPhoto.price + it.currentFramePrice + size.price
+            )
+        }
     }
 
 }
