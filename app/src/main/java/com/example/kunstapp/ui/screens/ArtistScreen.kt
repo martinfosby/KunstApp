@@ -43,7 +43,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.kunstapp.R
 import com.example.kunstapp.model.Artist
 import com.example.kunstapp.datasource.DataSource
@@ -52,8 +51,8 @@ import com.example.kunstapp.ui.theme.KunstAppTheme
 
 @Composable
 fun ArtistScreen(
-    onArtistClicked: (Artist) -> Unit,
     modifier: Modifier = Modifier,
+    onArtistClicked: (Artist) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -73,8 +72,8 @@ fun ArtistScreen(
 
 @Composable
 fun ArtistListItem(
+    modifier: Modifier = Modifier,
     artist: Artist,
-    modifier: Modifier = Modifier
 ) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = dimensionResource(id = R.dimen.small_elevation)),

@@ -86,7 +86,10 @@ fun SelectOptionScreen(
 }
 
 @Composable
-fun PhotoBox(orderUiState: OrderUiState, modifier: Modifier = Modifier) {
+fun PhotoBox(
+    modifier: Modifier = Modifier,
+    orderUiState: OrderUiState,
+) {
 
     Image(
         painter = painterResource(id = orderUiState.currentPhoto.imageResId),
@@ -109,12 +112,12 @@ fun PhotoBox(orderUiState: OrderUiState, modifier: Modifier = Modifier) {
 
 @Composable
 fun CheckoutCart(
+    modifier: Modifier = Modifier,
     orderUiStateState: OrderUiState,
     onCheckoutClicked: () -> Unit,
     onFrameSelected: (Frame) -> Unit,
     onSizeSelected: (Size) -> Unit,
     onWidthSelected: (Width) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     var selectedFrame by rememberSaveable { mutableStateOf(orderUiStateState.currentPhoto.frame) }
     var selectedSize by rememberSaveable { mutableStateOf(orderUiStateState.currentPhoto.size) }
@@ -292,6 +295,7 @@ fun CheckoutCart(
 fun SummaryPreview() {
     KunstAppTheme {
         SelectOptionScreen(
+            modifier = Modifier.fillMaxHeight(),
             onCheckoutClicked = {},
             onHomeClicked = {},
             orderUiState = OrderUiState(
@@ -302,7 +306,6 @@ fun SummaryPreview() {
             onFrameSelected = {},
             onSizeSelected = {},
             onWidthSelected = {},
-            modifier = Modifier.fillMaxHeight()
         )
     }
 }

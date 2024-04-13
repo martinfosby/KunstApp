@@ -1,7 +1,6 @@
 package com.example.kunstapp.ui.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,15 +15,11 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -41,10 +36,10 @@ import com.example.kunstapp.ui.theme.KunstAppTheme
 
 @Composable
 fun PhotoScreen(
+    modifier: Modifier = Modifier,
     orderUiState: OrderUiState,
     onPhotoClicked: (Photo) -> Unit,
     onHomeClicked: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -69,7 +64,10 @@ fun PhotoScreen(
 
 
 @Composable
-fun PhotoItemCard(photo: Photo, modifier: Modifier = Modifier) {
+fun PhotoItemCard(
+    modifier: Modifier = Modifier,
+    photo: Photo,
+) {
     Box(modifier = modifier, contentAlignment = Alignment.TopCenter) {
         Image(
             painter = painterResource(id = photo.imageResId),

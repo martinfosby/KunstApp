@@ -50,13 +50,13 @@ import com.example.kunstapp.ui.theme.KunstAppTheme
 
 @Composable
 fun StartOrderScreen(
+    modifier: Modifier = Modifier,
     orderUiState: OrderUiState,
     shoppingCartEmpty: Boolean,
     onArtistButtonClicked: () -> Unit,
     onCategoryButtonClicked: () -> Unit,
     onCheckoutButtonClicked: () -> Unit,
     onDeleteButtonClicked: (Photo) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -96,9 +96,9 @@ fun StartOrderScreen(
 
 @Composable
 fun ShoppingCartCard(
+    modifier: Modifier = Modifier,
     orderUiState: OrderUiState,
     onDeleteButtonClicked: (Photo) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier.fillMaxWidth()
@@ -154,6 +154,9 @@ fun ShoppingCartCard(
 fun StartOrderPreview() {
     KunstAppTheme {
         StartOrderScreen(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(dimensionResource(R.dimen.padding_medium)),
             orderUiState = OrderUiState(
                 DataSource.photos[0],
                 currentPhotos = DataSource.photos.filter { it.artist.id == DataSource.artists[0].id },
@@ -165,9 +168,6 @@ fun StartOrderPreview() {
             onCategoryButtonClicked = {},
             onCheckoutButtonClicked = {},
             onDeleteButtonClicked = {},
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(dimensionResource(R.dimen.padding_medium))
         )
     }
 }

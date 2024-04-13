@@ -2,12 +2,9 @@ package com.example.kunstapp.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,7 +24,10 @@ import com.example.kunstapp.ui.theme.KunstAppTheme
 
 
 @Composable
-fun CategoryScreen(modifier: Modifier = Modifier, onCategoryClicked: (Category) -> Unit) {
+fun CategoryScreen(
+    modifier: Modifier = Modifier,
+    onCategoryClicked: (Category) -> Unit,
+) {
     LazyColumn {
         items(Category.entries) { category ->
             CategoryCard(category = category, onCategoryClicked = onCategoryClicked)
@@ -37,7 +37,11 @@ fun CategoryScreen(modifier: Modifier = Modifier, onCategoryClicked: (Category) 
 
 
 @Composable
-fun CategoryCard(category: Category, onCategoryClicked: (Category) -> Unit, modifier: Modifier = Modifier) {
+fun CategoryCard(
+    modifier: Modifier = Modifier,
+    category: Category,
+    onCategoryClicked: (Category) -> Unit,
+) {
     Card(
         modifier = Modifier
             .clickable { onCategoryClicked(category) }
