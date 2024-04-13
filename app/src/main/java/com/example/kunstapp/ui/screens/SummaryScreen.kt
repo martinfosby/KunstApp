@@ -104,7 +104,6 @@ fun PhotoBox(orderUiState: OrderUiState, modifier: Modifier = Modifier) {
                 )
             )
             .padding(dimensionResource(id = orderUiState.currentPhoto.width.width))
-//            .aspectRatio(16f/9f)
     )
 
 }

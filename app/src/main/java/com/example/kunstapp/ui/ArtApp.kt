@@ -1,5 +1,8 @@
 package com.example.kunstapp.ui
 
+import android.media.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -16,7 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -25,6 +30,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kunstapp.R
+import com.example.kunstapp.data.OrderUiState
 import com.example.kunstapp.ui.screens.ArtistScreen
 import com.example.kunstapp.ui.screens.ArtScreen
 import com.example.kunstapp.ui.screens.CategoryScreen
@@ -32,6 +38,7 @@ import com.example.kunstapp.ui.screens.CheckoutScreen
 import com.example.kunstapp.ui.screens.PhotoScreen
 import com.example.kunstapp.ui.screens.StartOrderScreen
 import com.example.kunstapp.ui.screens.SummaryScreen
+import com.example.kunstapp.ui.theme.logo_color_background
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,7 +47,8 @@ fun ArtAppBar(
     currentScreen: ArtScreen,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
-    modifier: Modifier = Modifier
+    onLogoClicked: () -> Unit = {},
+    modifier: Modifier = Modifier,
 ) {
     TopAppBar(
         title = { Text(stringResource(id = currentScreen.title)) },
@@ -57,6 +65,29 @@ fun ArtAppBar(
                     )
                 }
             }
+        },
+        actions = {
+            if (currentScreen == ArtScreen.Start) {
+                IconButton(onClick = onLogoClicked) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                        contentDescription = stringResource(
+                            id = R.string.app_name
+                        ),
+                        tint = Color.Black,
+                        modifier = Modifier.background(logo_color_background)
+                    )
+                }
+            } else {
+                IconButton(onClick = onLogoClicked) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_home_24),
+                        contentDescription = stringResource(
+                            id = R.string.home
+                        ),
+                    )
+                }
+            }
         }
     )
 }
@@ -65,21 +96,24 @@ fun ArtAppBar(
 @Composable
 fun ArtApp(
     viewModel: OrderViewModel = viewModel(),
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentScreen = ArtScreen.valueOf(backStackEntry?.destination?.route ?: ArtScreen.Start.name)
+    val currentScreen =
+        ArtScreen.valueOf(backStackEntry?.destination?.route ?: ArtScreen.Start.name)
 
     Scaffold(
         topBar = {
             ArtAppBar(
                 currentScreen = currentScreen,
                 canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() }
+                navigateUp = { navController.navigateUp() },
+                onLogoClicked = { navController.navigate(ArtScreen.Start.name) }
             )
         }
     ) { innerPadding ->
         val uiState by viewModel.uiState.collectAsState()
+
         NavHost(
             navController = navController,
             startDestination = ArtScreen.Start.name,
@@ -160,7 +194,7 @@ fun ArtApp(
                 )
             }
             composable(route = ArtScreen.Checkout.name) {
-                CheckoutScreen(orderUiState = uiState)
+                CheckoutScreen(orderUiState = uiState, onPayClicked = { viewModel.resetOrder() })
             }
 
         }

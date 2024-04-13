@@ -20,9 +20,8 @@ class OrderViewModel : ViewModel() {
     val uiState: StateFlow<OrderUiState> = _uiState.asStateFlow()
 
     fun resetOrder() {
-        _uiState.value.shoppingCart.clear()
+        _uiState.value = OrderUiState()
     }
-
 
     fun setPhoto(photo: Photo) {
         _uiState.update {

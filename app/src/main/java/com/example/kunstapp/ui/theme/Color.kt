@@ -63,6 +63,9 @@ val md_theme_dark_surfaceTint = Color(0xFFACC7FF)
 val md_theme_dark_outlineVariant = Color(0xFF44474E)
 val md_theme_dark_scrim = Color(0xFF000000)
 
+// Logo
+val logo_color_background = Color(0xFFDCAA3D)
+
 // Frame colors
 val frame_color_metal = Color(0xFF75979B)
 val frame_color_wood = Color(0xFFA57B49)

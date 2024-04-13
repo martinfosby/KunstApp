@@ -16,9 +16,9 @@ data class OrderUiState(
     /** Selected date for pickup (such as "Jan 1") */
     val date: String = "",
     /** Total price for the order */
-    val price: Float = currentPhoto.price,
+    val price: Float = 0f,
     val mva: Float = 1.25f,
-    val mvaPrice: Float = currentPhoto.price * mva,
+    val mvaPrice: Float = 0f,
     /** Available pickup dates for the order*/
     val pickupOptions: List<String> = listOf()
 )

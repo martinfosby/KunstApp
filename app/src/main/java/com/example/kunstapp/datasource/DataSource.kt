@@ -200,7 +200,7 @@ object DataSource {
         ),
         Photo(
             id = 14,
-            title = R.string.cupcake,
+            title = R.string.donut,
             imageResId = R.drawable.donut,
             artist = artists[0],
             category = Category.Food,
@@ -209,7 +209,7 @@ object DataSource {
         ),
         Photo(
             id = 15,
-            title = R.string.cupcake,
+            title = R.string.gingerbread,
             imageResId = R.drawable.gingerbread,
             artist = artists[0],
             category = Category.Food,
@@ -218,7 +218,7 @@ object DataSource {
         ),
         Photo(
             id = 16,
-            title = R.string.cupcake,
+            title = R.string.honeycomb,
             imageResId = R.drawable.honeycomb,
             artist = artists[0],
             category = Category.Food,
@@ -227,7 +227,7 @@ object DataSource {
         ),
         Photo(
             id = 17,
-            title = R.string.cupcake,
+            title = R.string.ice_cream_sandwich,  // Assuming string resource for ice cream sandwich
             imageResId = R.drawable.icecreamsandwich,
             artist = artists[0],
             category = Category.Food,
@@ -236,7 +236,7 @@ object DataSource {
         ),
         Photo(
             id = 18,
-            title = R.string.cupcake,
+            title = R.string.jellybean,
             imageResId = R.drawable.jellybean,
             artist = artists[0],
             category = Category.Food,
@@ -245,7 +245,7 @@ object DataSource {
         ),
         Photo(
             id = 19,
-            title = R.string.cupcake,
+            title = R.string.kitkat,
             imageResId = R.drawable.kitkat,
             artist = artists[0],
             category = Category.Food,
@@ -254,7 +254,7 @@ object DataSource {
         ),
         Photo(
             id = 20,
-            title = R.string.cupcake,
+            title = R.string.lollipop,
             imageResId = R.drawable.lollipop,
             artist = artists[0],
             category = Category.Food,
@@ -263,7 +263,7 @@ object DataSource {
         ),
         Photo(
             id = 21,
-            title = R.string.cupcake,
+            title = R.string.frozen_yogurt,  // Assuming string resource for frozen yogurt
             imageResId = R.drawable.froyo,
             artist = artists[0],
             category = Category.Food,
@@ -272,7 +272,7 @@ object DataSource {
         ),
         Photo(
             id = 22,
-            title = R.string.cupcake,
+            title = R.string.marshmallow,
             imageResId = R.drawable.marshmallow,
             artist = artists[0],
             category = Category.Food,
@@ -281,7 +281,7 @@ object DataSource {
         ),
         Photo(
             id = 23,
-            title = R.string.cupcake,
+            title = R.string.nougat,
             imageResId = R.drawable.nougat,
             artist = artists[0],
             category = Category.Food,
@@ -290,7 +290,7 @@ object DataSource {
         ),
         Photo(
             id = 24,
-            title = R.string.cupcake,
+            title = R.string.oreo,
             imageResId = R.drawable.oreo,
             artist = artists[0],
             category = Category.Food,
@@ -299,7 +299,8 @@ object DataSource {
         ),
 
 
-    )
+
+        )
     fun getPhotosByCategory(category: Category): List<Photo> {
         return photos.filter { it.category == category }
     }

@@ -25,6 +25,8 @@
     <string name="artists">Kunstnere</string>
     <string name="categories">Kategorier</string>
     <string name="photos">Bilder</string>
+
+
     <string name="artist_name_ola">Ola Nordmann</string>
     <string name="artist_name_kari">Kari Nordmann</string>
     <string name="artist_name_jens">Jens Stoltenberg</string>
@@ -39,7 +41,6 @@
     <string name="artist_name_michael">Michael</string>
     <string name="artist_name_lisa">Lisa</string>
 
-    <string name="cupcake">Muffins</string>
     <string name="skyscraper">Høyhus</string>
     <string name="skyline">Skyline</string>
     <string name="grass">Gresseng</string>
@@ -53,14 +54,29 @@
     <string name="photo8_title">Skyline Panorama</string>
     <string name="photo9_title">Urban Symmetry</string>
     <string name="photo10_title">Elevated Perspective</string>
+
+    <string name="cupcake">Muffins</string>
+    <string name="donut">Donut</string>
+    <string name="gingerbread">Gingerbread Cookie</string>
+    <string name="honeycomb">Honeycomb</string>
+    <string name="ice_cream_sandwich">Ice Cream Sandwich</string>
+    <string name="jellybean">Jellybean</string>
+    <string name="kitkat">KitKat</string>
+    <string name="lollipop">Lollipop</string>
+    <string name="frozen_yogurt">Frozen Yogurt</string>
+    <string name="marshmallow">Marshmallow</string>
+    <string name="nougat">Nougat</string>
+    <string name="oreo">Oreo Cookie</string>
+
+
     <string name="calculated_price">Beregnet pris: %skr</string>
     <string name="price_with_frame">Pris(inkl. ramme): %skr</string>
     <string name="frame_choice">Rammevalg</string>
     <string name="photo_details">Bildedetaljer:</string>
     <string name="put_in_shopping_cart">Legg i handlekurv</string>
     <string name="home">Hjem</string>
-    <string name="metal_frame">metal</string>
-    <string name="wood_frame">tre</string>
+    <string name="metal_frame">Metal</string>
+    <string name="wood_frame">Tre</string>
     <string name="plastic_frame">Plast</string>
     <string name="artist_name">Kunstner: %s</string>
     <string name="no_frame">Ingen</string>
@@ -92,6 +108,15 @@
     <string name="medium_width">Medium bredde</string>
     <string name="large_width">Stor bredde</string>
     <string name="total_price_with_mva">Totalpris inkl. mva: %.2fkr</string>
+    <string name="photo_choosen">Valgt bilde</string>
+    <string name="size">Størrelse: %s</string>
+    <string name="frame_color">Ramme farge</string>
+    <string name="payment_option">Betalingsvalg:</string>
+    <string name="pay">Betal</string>
+    <string name="confirm">Bekreft</string>
+    <string name="dismiss">Avbryt</string>
+    <string name="dialog_title">Tusen takk!</string>
+    <string name="dialog_text">Din betaling er mottatt og lagt til forfall. Takk for handelen.</string>
 
 
 </resources>

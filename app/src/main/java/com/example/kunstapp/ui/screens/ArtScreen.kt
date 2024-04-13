@@ -8,8 +8,6 @@ enum class ArtScreen(@StringRes var title: Int) {
     Artists(title = R.string.artists),
     Categories(title = R.string.categories),
     Photos(title = R.string.photos),
-    Summary(title = R.string.summary),
+    Summary(title = R.string.photo_choosen),
     Checkout(title = R.string.checkout);
-
-
 }
