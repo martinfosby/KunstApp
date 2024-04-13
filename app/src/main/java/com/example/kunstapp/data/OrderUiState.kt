@@ -13,12 +13,8 @@ data class OrderUiState(
     val shoppingCartEmpty: Boolean = true,
     val shoppingCart: MutableList<Photo> = mutableListOf(),
     val quantity: Int = 0,
-    /** Selected date for pickup (such as "Jan 1") */
-    val date: String = "",
     /** Total price for the order */
     val price: Float = 0f,
     val mva: Float = 1.25f,
     val mvaPrice: Float = 0f,
-    /** Available pickup dates for the order*/
-    val pickupOptions: List<String> = listOf()
 )
