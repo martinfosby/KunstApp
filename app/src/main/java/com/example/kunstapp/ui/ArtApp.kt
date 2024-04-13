@@ -194,7 +194,13 @@ fun ArtApp(
                 )
             }
             composable(route = ArtScreen.Checkout.name) {
-                CheckoutScreen(orderUiState = uiState, onPayClicked = { viewModel.resetOrder() })
+                CheckoutScreen(
+                    orderUiState = uiState,
+                    onPayClicked = {
+                        viewModel.resetOrder()
+                        navController.navigate(ArtScreen.Start.name)
+                    }
+                )
             }
 
         }

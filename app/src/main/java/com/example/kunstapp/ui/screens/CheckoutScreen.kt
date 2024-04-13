@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -164,7 +165,10 @@ fun CheckoutScreen(
 
         if (showDialog) {
             AlertDialogPayment(
-                onDismissRequest = { showDialog = false },
+                onDismissRequest = {
+                    showDialog = false
+                    onPayClicked()
+                },
                 onConfirmation = {
                     showDialog = false
                     onPayClicked()
@@ -188,12 +192,17 @@ fun PaymentCard(onPayClicked: () -> Unit, modifier: Modifier = Modifier) {
         ) {
             Text(
                 text = stringResource(id = R.string.payment_option),
-                style = MaterialTheme.typography.headlineSmall,
+                style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
+            Text(text = stringResource(id = R.string.credit_card), style = MaterialTheme.typography.headlineSmall)
+            Text(text = stringResource(id = R.string.credit_card_expiration), style = MaterialTheme.typography.headlineSmall)
+            Text(text = stringResource(id = R.string.credit_card_security_code), style = MaterialTheme.typography.headlineSmall)
             Button(
                 onClick = onPayClicked,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(dimensionResource(id = R.dimen.padding_medium))
             ) {
                 Text(text = stringResource(id = R.string.pay))
             }
@@ -223,21 +232,11 @@ fun AlertDialogPayment(
             onDismissRequest()
         },
         confirmButton = {
-            TextButton(
-                onClick = {
-                    onConfirmation()
-                }
+            Button(
+                onClick = { onConfirmation() },
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Text(stringResource(id = R.string.confirm))
-            }
-        },
-        dismissButton = {
-            TextButton(
-                onClick = {
-                    onDismissRequest()
-                }
-            ) {
-                Text(stringResource(id = R.string.dismiss))
+                Text(stringResource(id = R.string.ok))
             }
         }
     )

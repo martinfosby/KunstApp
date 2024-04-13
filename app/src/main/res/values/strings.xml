@@ -115,8 +115,12 @@
     <string name="pay">Betal</string>
     <string name="confirm">Bekreft</string>
     <string name="dismiss">Avbryt</string>
+    <string name="ok">Ok</string>
     <string name="dialog_title">Tusen takk!</string>
     <string name="dialog_text">Din betaling er mottatt og lagt til forfall. Takk for handelen.</string>
+    <string name="credit_card">Kortnr: 9999.1122333</string>
+    <string name="credit_card_expiration">Utløpsmåned: 06.27</string>
+    <string name="credit_card_security_code">Tresifret nr: 123</string>
 
 
 </resources>
