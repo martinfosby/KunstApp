@@ -1,8 +1,6 @@
 package com.example.kunstapp.ui
 
-import android.media.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -30,25 +28,24 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kunstapp.R
-import com.example.kunstapp.data.OrderUiState
 import com.example.kunstapp.ui.screens.ArtistScreen
 import com.example.kunstapp.ui.screens.ArtScreen
 import com.example.kunstapp.ui.screens.CategoryScreen
 import com.example.kunstapp.ui.screens.CheckoutScreen
 import com.example.kunstapp.ui.screens.PhotoScreen
 import com.example.kunstapp.ui.screens.StartOrderScreen
-import com.example.kunstapp.ui.screens.SummaryScreen
+import com.example.kunstapp.ui.screens.SelectOptionScreen
 import com.example.kunstapp.ui.theme.logo_color_background
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtAppBar(
+    modifier: Modifier = Modifier,
     currentScreen: ArtScreen,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
     onLogoClicked: () -> Unit = {},
-    modifier: Modifier = Modifier,
 ) {
     TopAppBar(
         title = { Text(stringResource(id = currentScreen.title)) },
@@ -108,7 +105,9 @@ fun ArtApp(
                 currentScreen = currentScreen,
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() },
-                onLogoClicked = { navController.navigate(ArtScreen.Start.name) }
+                onLogoClicked = {
+                    navController.popBackStack(ArtScreen.Start.name, inclusive = false)
+                }
             )
         }
     ) { innerPadding ->
@@ -167,12 +166,12 @@ fun ArtApp(
                         navController.navigate(ArtScreen.Summary.name)
                     },
                     onHomeClicked = {
-                        navController.navigate(ArtScreen.Start.name)
+                        navController.popBackStack(ArtScreen.Start.name, inclusive = false)
                     },
                 )
             }
             composable(route = ArtScreen.Summary.name) {
-                SummaryScreen(
+                SelectOptionScreen(
                     orderUiState = uiState,
                     onCheckoutClicked = {
                         viewModel.addToShopping()
@@ -180,7 +179,7 @@ fun ArtApp(
                         navController.navigate(ArtScreen.Photos.name)
                     },
                     onHomeClicked = {
-                        navController.navigate(ArtScreen.Start.name)
+                        navController.popBackStack(ArtScreen.Start.name, inclusive = false)
                     },
                     onFrameSelected = {
                         viewModel.setFrame(it)
@@ -197,12 +196,19 @@ fun ArtApp(
                 CheckoutScreen(
                     orderUiState = uiState,
                     onPayClicked = {
-                        viewModel.resetOrder()
-                        navController.navigate(ArtScreen.Start.name)
+                        resetOrderAndNavigateToStart(viewModel, navController)
                     }
                 )
             }
 
         }
     }
+}
+
+private fun resetOrderAndNavigateToStart(
+    viewModel: OrderViewModel,
+    navController: NavHostController
+) {
+    viewModel.resetOrder()
+    navController.popBackStack(ArtScreen.Start.name, inclusive = false)
 }

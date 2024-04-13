@@ -21,7 +21,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -54,14 +53,14 @@ import com.example.kunstapp.ui.theme.KunstAppTheme
 
 
 @Composable
-fun SummaryScreen(
+fun SelectOptionScreen(
+    modifier: Modifier = Modifier,
     orderUiState: OrderUiState,
     onCheckoutClicked: () -> Unit,
     onHomeClicked: () -> Unit,
     onFrameSelected: (Frame) -> Unit,
     onSizeSelected: (Size) -> Unit,
     onWidthSelected: (Width) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     Column(
         verticalArrangement = Arrangement.Bottom,
@@ -292,7 +291,7 @@ fun CheckoutCart(
 @Composable
 fun SummaryPreview() {
     KunstAppTheme {
-        SummaryScreen(
+        SelectOptionScreen(
             onCheckoutClicked = {},
             onHomeClicked = {},
             orderUiState = OrderUiState(
