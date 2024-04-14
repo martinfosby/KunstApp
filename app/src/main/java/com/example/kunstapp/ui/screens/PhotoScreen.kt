@@ -2,6 +2,7 @@ package com.example.kunstapp.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -41,25 +42,24 @@ fun PhotoScreen(
     onPhotoClicked: (Photo) -> Unit,
     onHomeClicked: () -> Unit,
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+    LazyVerticalGrid(
+        modifier = modifier,
+        columns = GridCells.Fixed(2),
+        contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_medium)),
     ) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_medium)),
-            modifier = modifier
-        ) {
-            items(orderUiState.currentPhotos) { photo ->
-                PhotoItemCard(
-                    photo = photo,
-                    modifier = Modifier.clickable { onPhotoClicked(photo) }
-                )
+        items(orderUiState.currentPhotos) { photo ->
+            PhotoItemCard(
+                photo = photo,
+                modifier = Modifier.clickable { onPhotoClicked(photo) }
+            )
+        }
+        item {
+            Button(onClick = onHomeClicked) {
+                Text(text = stringResource(id = R.string.home))
             }
         }
-        Button(onClick = onHomeClicked) {
-            Text(text = stringResource(id = R.string.home))
-        }
     }
+
 }
 
 

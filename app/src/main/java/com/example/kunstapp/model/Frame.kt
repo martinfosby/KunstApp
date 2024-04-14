@@ -13,7 +13,6 @@ enum class Frame(
     var color: Color,
     var width: Width = Width.None,
 ) {
-
     None(0f, R.string.no_frame, Color.Unspecified),
     Plastic(50f, R.string.plastic_frame, frame_color_plastic),   // Plastic frame with price, width, and height;
     Wood(100f, R.string.wood_frame, frame_color_wood),    // Wood frame with price, width, and height

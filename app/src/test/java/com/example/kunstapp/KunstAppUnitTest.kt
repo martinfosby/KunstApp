@@ -24,6 +24,20 @@ class KunstAppUnitTest {
     }
 
     @Test
+    fun test_currentPhoto_visitsIncrement() {
+        // Arrange
+        val expectedPhoto = DataSource.photos[0]
+        val expectedVisits: Int = 10001
+
+        // Act
+        viewmodel.setPhoto(expectedPhoto)
+
+        // Assert
+        val currentPhoto = viewmodel.uiState.value.currentPhoto
+        assertEquals(expectedVisits, currentPhoto.visits)
+    }
+
+    @Test
     fun test_currentPhoto() {
         // Arrange
         val expectedPhoto = DataSource.photos[0]
@@ -36,19 +50,7 @@ class KunstAppUnitTest {
         assertEquals(expectedPhoto, currentPhoto)
     }
 
-    @Test
-    fun test_currentPhoto_visitsIncrement() {
-        // Arrange
-        val expectedPhoto = DataSource.photos[0]
-        val expectedVisits = 10001
 
-        // Act
-        viewmodel.setPhoto(expectedPhoto)
-
-        // Assert
-        val currentPhoto = viewmodel.uiState.value.currentPhoto
-        assertEquals(expectedVisits, currentPhoto.visits)
-    }
 
     @Test
     fun test_addFrame_checkPrice() {
