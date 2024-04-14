@@ -85,11 +85,9 @@ fun StartOrderScreen(
             ShoppingCartCard(
                 orderUiState = orderUiState,
                 onDeleteButtonClicked = onDeleteButtonClicked,
+                onCheckoutButtonClicked = onCheckoutButtonClicked
             )
-            Spacer(modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_large)))
-            Button(onClick = onCheckoutButtonClicked) {
-                Text(text = stringResource(id = R.string.go_to_checkout))
-            }
+
         }
     }
 }
@@ -99,11 +97,15 @@ fun ShoppingCartCard(
     modifier: Modifier = Modifier,
     orderUiState: OrderUiState,
     onDeleteButtonClicked: (Photo) -> Unit,
+    onCheckoutButtonClicked: () -> Unit
 ) {
     Card(
         modifier = modifier.fillMaxWidth()
     ) {
-        LazyColumn {
+        LazyColumn(
+            modifier = modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             items(orderUiState.shoppingCart) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -145,6 +147,13 @@ fun ShoppingCartCard(
                     }
                 }
             }
+            item {
+                Spacer(modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_large)))
+                Button(modifier = Modifier.align(Alignment.CenterHorizontally), onClick = onCheckoutButtonClicked) {
+                    Text(text = stringResource(id = R.string.go_to_checkout))
+                }
+            }
+
         }
     }
 }
