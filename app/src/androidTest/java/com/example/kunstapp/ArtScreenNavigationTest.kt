@@ -94,6 +94,18 @@ class ArtScreenNavigationTest {
     }
 
 
+    @Test
+    fun artApp_clickOnPayAndOk_navigateToStartScreen() {
+        navigateToCheckoutScreen()
+        composeTestRule.onNodeWithStringId(R.string.pay)
+            .performClick()
+        composeTestRule.onNodeWithStringId(R.string.ok)
+            .performClick()
+        navController.assertCurrentRouteName(ArtScreen.Start.name)
+    }
+
+
+
     private fun navigateToArtistScreen() {
         composeTestRule.onNodeWithStringId(R.string.artist)
             .performClick()

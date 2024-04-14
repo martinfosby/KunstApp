@@ -48,7 +48,8 @@ class OrderViewModel : ViewModel() {
                 },
                 shoppingCartEmpty = it.shoppingCart.isEmpty(),
                 quantity = it.quantity + 1,
-                price = it.price + _uiState.value.currentPhoto.getTotalPrice()
+                price = it.price + _uiState.value.currentPhoto.getTotalPrice(),
+                mvaPrice = (it.price + _uiState.value.currentPhoto.getTotalPrice()) * it.mva
             )
         }
     }
@@ -61,7 +62,9 @@ class OrderViewModel : ViewModel() {
                     remove(photo)
                 },
                 shoppingCartEmpty = it.shoppingCart.isEmpty(),
-                quantity = it.quantity - 1
+                quantity = it.quantity - 1,
+                price = it.price - photo.getTotalPrice(),
+                mvaPrice = (it.price - photo.getTotalPrice()) * it.mva
             )
         }
     }
