@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -62,25 +63,27 @@ fun CustomPhotoScreen(
     onSizeSelected: (Size) -> Unit,
     onWidthSelected: (Width) -> Unit,
 ) {
-    Column(
+    LazyColumn(
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxSize()
     ) {
-        PhotoBox(
-            orderUiState = orderUiState,
-        )
-        CheckoutCart(
-            orderUiStateState = orderUiState,
-            onCheckoutClicked = onCheckoutClicked,
-            onFrameSelected = onFrameSelected,
-            onSizeSelected = onSizeSelected,
-            onWidthSelected = onWidthSelected,
-        )
-        Button(
-            onClick = onHomeClicked,
-        ) {
-            Text(text = stringResource(id = R.string.home))
+        item {
+            PhotoBox(
+                orderUiState = orderUiState,
+            )
+            CheckoutCart(
+                orderUiStateState = orderUiState,
+                onCheckoutClicked = onCheckoutClicked,
+                onFrameSelected = onFrameSelected,
+                onSizeSelected = onSizeSelected,
+                onWidthSelected = onWidthSelected,
+            )
+            Button(
+                onClick = onHomeClicked,
+            ) {
+                Text(text = stringResource(id = R.string.home))
+            }
         }
     }
 }
