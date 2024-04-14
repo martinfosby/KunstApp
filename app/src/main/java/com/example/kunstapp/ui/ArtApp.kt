@@ -34,7 +34,7 @@ import com.example.kunstapp.ui.screens.CategoryScreen
 import com.example.kunstapp.ui.screens.CheckoutScreen
 import com.example.kunstapp.ui.screens.PhotoScreen
 import com.example.kunstapp.ui.screens.StartOrderScreen
-import com.example.kunstapp.ui.screens.SelectOptionScreen
+import com.example.kunstapp.ui.screens.CustomPhotoScreen
 import com.example.kunstapp.ui.theme.logo_color_background
 
 
@@ -154,6 +154,7 @@ fun ArtApp(
             composable(route = ArtScreen.Categories.name) {
                 CategoryScreen {
                     ArtScreen.Photos.title = it.desc
+                    viewModel.setCategory(it)
                     viewModel.setPhotosFromCategory(it)
                     navController.navigate(ArtScreen.Photos.name)
                 }
@@ -163,15 +164,15 @@ fun ArtApp(
                     orderUiState = uiState,
                     onPhotoClicked = {
                         viewModel.setPhoto(it)
-                        navController.navigate(ArtScreen.Summary.name)
+                        navController.navigate(ArtScreen.Customize.name)
                     },
                     onHomeClicked = {
                         navController.popBackStack(ArtScreen.Start.name, inclusive = false)
                     },
                 )
             }
-            composable(route = ArtScreen.Summary.name) {
-                SelectOptionScreen(
+            composable(route = ArtScreen.Customize.name) {
+                CustomPhotoScreen(
                     orderUiState = uiState,
                     onCheckoutClicked = {
                         viewModel.addToShopping()

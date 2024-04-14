@@ -9,7 +9,6 @@ import com.example.kunstapp.model.Photo
 import com.example.kunstapp.datasource.DataSource
 import com.example.kunstapp.model.Size
 import com.example.kunstapp.model.Width
-import com.example.kunstapp.ui.screens.ArtScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,12 +23,14 @@ class OrderViewModel : ViewModel() {
     }
 
     fun setPhoto(photo: Photo) {
+        photo.visits += 1
         _uiState.update {
             it.copy(
                 currentPhoto = photo,
             )
         }
     }
+
 
     fun setQuantity() {
         _uiState.update {
@@ -46,7 +47,8 @@ class OrderViewModel : ViewModel() {
                     add(_uiState.value.currentPhoto)
                 },
                 shoppingCartEmpty = it.shoppingCart.isEmpty(),
-                quantity = it.quantity + 1
+                quantity = it.quantity + 1,
+                price = it.price + _uiState.value.currentPhoto.getTotalPrice()
             )
         }
     }
@@ -99,7 +101,7 @@ class OrderViewModel : ViewModel() {
 
     fun setPrice() {
         _uiState.update { currentState ->
-            var totalPrice: Float = 0.0f
+            var totalPrice = 0.0f
             currentState.shoppingCart.forEach { totalPrice += it.getTotalPrice() }
             currentState.copy(
                 price = totalPrice,

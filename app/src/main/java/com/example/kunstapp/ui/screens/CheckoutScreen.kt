@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.kunstapp.R
 import com.example.kunstapp.data.OrderUiState
@@ -223,18 +224,18 @@ fun AlertDialogPayment(
             Icon(icon, contentDescription = null)
         },
         title = {
-            Text(text = stringResource(id = dialogTitle))
+            Text(text = stringResource(id = dialogTitle), textAlign = TextAlign.Center)
         },
         text = {
-            Text(text = stringResource(id = dialogText))
+            Text(text = stringResource(id = dialogText), textAlign = TextAlign.Center)
         },
         onDismissRequest = {
             onDismissRequest()
         },
         confirmButton = {
             Button(
+                modifier = Modifier.fillMaxWidth(),
                 onClick = { onConfirmation() },
-                modifier = Modifier.fillMaxWidth()
             ) {
                 Text(stringResource(id = R.string.ok))
             }

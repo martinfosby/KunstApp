@@ -53,7 +53,7 @@ import com.example.kunstapp.ui.theme.KunstAppTheme
 
 
 @Composable
-fun SelectOptionScreen(
+fun CustomPhotoScreen(
     modifier: Modifier = Modifier,
     orderUiState: OrderUiState,
     onCheckoutClicked: () -> Unit,
@@ -294,7 +294,7 @@ fun CheckoutCart(
 @Composable
 fun SummaryPreview() {
     KunstAppTheme {
-        SelectOptionScreen(
+        CustomPhotoScreen(
             modifier = Modifier.fillMaxHeight(),
             onCheckoutClicked = {},
             onHomeClicked = {},
